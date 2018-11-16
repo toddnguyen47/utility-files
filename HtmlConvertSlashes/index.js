@@ -16,6 +16,10 @@ submitButton.onclick = function() {
 
 var copyButton = document.getElementById("copyButton");
 copyButton.onclick = function() {
+	let outputElem = document.getElementById("textOutput");
+	// Auto select and focus
+	outputElem.focus();
+	outputElem.select();
 	document.execCommand('copy');
 }
 
