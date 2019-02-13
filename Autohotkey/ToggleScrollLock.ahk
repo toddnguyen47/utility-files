@@ -1,4 +1,4 @@
-; Right Ctrl + / to toggle ScrollLock
+; Right Alt + / to toggle ScrollLock
 RAlt & /::
 SendInput {ScrollLock}
 IsScrollLockOn := ""
