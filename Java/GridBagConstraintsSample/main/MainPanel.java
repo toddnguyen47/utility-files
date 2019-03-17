@@ -39,5 +39,15 @@ public class MainPanel extends JPanel {
         JComboBox<String> cbox = new JComboBox<> (new String[] {"5", "4", "3333"}) ;
         gbc.gridy = 3;
         this.add(cbox, gbc);
+        
+        javax.swing.JTextField jtf = new javax.swing.JTextField();
+        gbc.gridy = 4;
+        GridBagConstraints gbc2 = (GridBagConstraints) gbc.clone();
+        gbc2.fill = GridBagConstraints.HORIZONTAL;
+        this.add(jtf, gbc2);
+        
+        JButton button4 = new JButton("Button 4");
+        gbc.gridy = 5;
+        this.add(button4, gbc);
     }
 }
