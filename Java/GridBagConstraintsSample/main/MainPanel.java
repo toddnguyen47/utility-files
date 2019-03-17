@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,37 +18,39 @@ public class MainPanel extends JPanel {
     
     
     private void init() {
+        int currentYCoord = 0;
+        
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.weightx = 0.1;
-        gbc.weighty = 0.1;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.insets = new Insets(5, 5, 5, 5);
         
         JButton button1 = new JButton("Button 1");
-        gbc.gridy = 0;
+        gbc.gridy = currentYCoord++;
         this.add(button1, gbc);
         
         JButton button2 = new JButton("Button 2 - Slightly Longer");
-        gbc.gridy = 1;
+        gbc.gridy = currentYCoord++;
         this.add(button2, gbc);
         
         JButton button3 = new JButton("Button 3");
-        gbc.gridy = 2;
+        gbc.gridy = currentYCoord++;
         this.add(button3, gbc);
         
         JComboBox<String> cbox = new JComboBox<> (new String[] {"5", "4", "3333"}) ;
-        gbc.gridy = 3;
+        gbc.gridy = currentYCoord++;
         this.add(cbox, gbc);
         
         javax.swing.JTextField jtf = new javax.swing.JTextField();
-        gbc.gridy = 4;
+        gbc.gridy = currentYCoord++;
         GridBagConstraints gbc2 = (GridBagConstraints) gbc.clone();
         gbc2.fill = GridBagConstraints.HORIZONTAL;
         this.add(jtf, gbc2);
         
         JButton button4 = new JButton("Button 4");
-        gbc.gridy = 5;
+        gbc.gridy = currentYCoord++;
         this.add(button4, gbc);
     }
 }
