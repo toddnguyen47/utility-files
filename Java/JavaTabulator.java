@@ -30,7 +30,7 @@ public class JavaTabulator {
 
         // Now we iterate the rows, going back to fix the previous rows as needed
         for (int i = 0, i2 = rows.size(); i < i2; i++) {
-            String[] curRow = rows.get(i);
+            String[] curRow = rows.get(i).clone();
             if (curRow.length != headerLength) {
                 System.out.println("Row and header length does not match.");
                 return "";
