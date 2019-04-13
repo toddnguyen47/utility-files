@@ -1,7 +1,7 @@
 public class JavaTabulator {
     /**
      * Return a tabulated string
-     * @param row
+     * @param rows The total amount of rows
      * @param header Header row
      * @return The formatted string
      */
@@ -24,7 +24,7 @@ public class JavaTabulator {
             arrSeparator[i] = repeatedMinus;
         }
         
-        outputArrayList.add(header);
+        outputArrayList.add(header.clone());
         outputArrayList.add(arrSeparator);
         
 
