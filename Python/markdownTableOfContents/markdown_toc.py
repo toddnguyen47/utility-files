@@ -143,7 +143,7 @@ class MarkdownToc:
 
     def get_prefix_whitespace(self):
         hashtag_count = self.get_hashtag_count_in_curline()
-        list1 = ["    "] * (hashtag_count - 1)
+        list1 = ["  "] * (hashtag_count - 1)
 
         return "".join(list1)
 
