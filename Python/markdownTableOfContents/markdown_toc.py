@@ -114,7 +114,7 @@ class MarkdownToc:
         :param line: The line to extract special characters from
         :return: The extracted line
         """
-        pattern = r"[A-Za-z0-9_ ]"
+        pattern = r"[A-Za-z0-9_\- ]"
         prog = re.compile(pattern)
         temp_str = ""
         for char in self.cur_line:
