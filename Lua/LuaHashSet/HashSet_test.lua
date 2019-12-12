@@ -1,0 +1,85 @@
+insulate("HashSet Test | ", function()
+  local hashSet = nil
+
+  setup(function()
+    hashSet = require("HashSet"):new()
+  end)
+
+  before_each(function()
+    hashSet:clear()
+  end)
+
+  randomize()
+
+  test("isEmpty()", function()
+    assert.is_true(hashSet:isEmpty())
+  end)
+
+  test("clear(); checking size is 0", function()
+    hashSet:clear()
+    assert.is_true(hashSet:isEmpty())
+  end)
+
+  test("size(); check if empty HashSet is 0", function()
+    hashSet:clear()
+    assert.is_true(hashSet:size() == 0)
+  end)
+
+  test("add 1; size should be 1, isEmpty should be false", function()
+    hashSet:add("elem1")
+    assert.is.equal(1, hashSet:size())
+    assert.is_false(hashSet:isEmpty())
+  end)
+
+  test("add element then see if the hashset contains it", function()
+    local e = "elem1"
+    assert.is_false(hashSet:contains(e))
+    hashSet:add(e)
+    assert.is_true(hashSet:contains(e))
+  end)
+
+  test("add multiple DUPLICATES; size should be 1, isEmpty should be false", function()
+    math.randomseed(os.time())
+    local numTimes = math.random(10, 20)
+
+    for _=1, numTimes do hashSet:add("elem") end
+    assert.is.equal(1, hashSet:size())
+    assert.is_false(hashSet:isEmpty())
+  end)
+
+  test("add multiple non-duplicates; size should be 1, isEmpty should be false", function()
+    math.randomseed(os.time())
+    local numTimes = math.random(10, 20)
+
+    for i = 1, numTimes do hashSet:add("elem" .. i) end
+    assert.is.equal(numTimes, hashSet:size())
+    assert.is_false(hashSet:isEmpty())
+  end)
+
+  test("Add 5 elements then return an iterator", function()
+    for i = 1, 5 do hashSet:add("elem" .. i) end
+    local iter = hashSet:iterator()
+
+    local i = 1
+    for elem in iter do
+      assert.is.equal("elem" .. i, elem)
+      i = i + 1
+    end
+  end)
+
+  test("add 1 then remove 1, size == 0 and hashset should be empty", function()
+    hashSet:add("elem1")
+    hashSet:remove("elem1")
+    assert.is_true(hashSet:isEmpty())
+    assert.is.equal(0, hashSet:size())
+  end)
+
+  test("add 1 then remove 1 then readd it, size == 1 and hashset should not be empty", function()
+    hashSet:add("elem1")
+    hashSet:remove("elem1")
+    hashSet:add("elem1")
+    hashSet:add("elem1")
+    assert.is_false(hashSet:isEmpty())
+    assert.is.equal(1, hashSet:size())
+  end)
+end)
