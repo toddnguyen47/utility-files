@@ -43,8 +43,10 @@ function HashSet:iterator()
 end
 
 function HashSet:remove(elem)
-  self.sizeOfStorage = self.sizeOfStorage - 1
-  self.storage[elem] = nil
+  if self:contains(elem) then
+    self.sizeOfStorage = self.sizeOfStorage - 1
+    self.storage[elem] = nil
+  end
 end
 
 function HashSet:size()
