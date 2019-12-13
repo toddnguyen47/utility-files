@@ -16,7 +16,9 @@ function HashSet:add(elem)
   if false == self:contains(elem) then
     self.storage[elem] = elem
     self.sizeOfStorage = self.sizeOfStorage + 1
+    return true
   end
+  return false
 end
 
 function HashSet:clear()
@@ -46,7 +48,9 @@ function HashSet:remove(elem)
   if self:contains(elem) then
     self.sizeOfStorage = self.sizeOfStorage - 1
     self.storage[elem] = nil
+    return true
   end
+  return false
 end
 
 function HashSet:size()
