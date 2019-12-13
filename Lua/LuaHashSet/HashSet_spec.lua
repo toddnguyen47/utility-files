@@ -108,4 +108,15 @@ insulate("HashSet Test | ", function()
     assert.is_true(hashSet:remove("elem2"))
     assert.is.equal(2, hashSet:size())
   end)
+
+  describe("Run multiple for loops", function()
+    hashSet:clear()
+    for i = 1, 10, 1 do
+      test("Test " .. i, function()
+        assert.is_true(hashSet:add("elem" .. i))
+      end)
+    end
+
+    assert.is.equal(10, hashSet:size())
+  end)
 end)
