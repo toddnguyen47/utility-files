@@ -43,7 +43,7 @@ function HashSet:iterator()
 
   return function ()
     if i <= n then
-      local val = self.storage[keySet[i]]
+      local val = keySet[i]
       i = i + 1
       return val
     end

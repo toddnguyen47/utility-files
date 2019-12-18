@@ -57,12 +57,20 @@ insulate("HashSet Test | ", function()
   end)
 
   test("Add 5 elements then return an iterator", function()
-    for i = 1, 5 do hashSet:add("elem" .. i) end
-    local iter = hashSet:iterator()
+    local expectedSet = {
+      elem1 = "elem1",
+      elem2 = "elem2",
+      elem3 = "elem3",
+      elem4 = "elem4",
+      elem5 = "elem5",
+    }
 
+    for key, _ in pairs(expectedSet) do hashSet:add(key) end
+
+    local iter = hashSet:iterator()
     local i = 1
     for elem in iter do
-      assert.is.equal("elem" .. i, elem)
+      assert.is_true(expectedSet[elem] ~= nil)
       i = i + 1
     end
   end)
@@ -107,16 +115,5 @@ insulate("HashSet Test | ", function()
     assert.is_true(hashSet:add("elem3"))
     assert.is_true(hashSet:remove("elem2"))
     assert.is.equal(2, hashSet:size())
-  end)
-
-  describe("Run multiple for loops", function()
-    hashSet:clear()
-    for i = 1, 10, 1 do
-      test("Test " .. i, function()
-        assert.is_true(hashSet:add("elem" .. i))
-      end)
-    end
-
-    assert.is.equal(10, hashSet:size())
   end)
 end)
