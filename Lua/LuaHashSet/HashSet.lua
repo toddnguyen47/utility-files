@@ -36,11 +36,17 @@ end
 
 function HashSet:iterator()
   -- Ref: https://www.lua.org/pil/7.1.html
+  local keySet = {}
+  for k, _ in pairs(self.storage) do table.insert(keySet, k) end
   local i = 1
-  local n = #self.storage
+  local n = #keySet
+
   return function ()
-    i = i + 1
-    if i <= n then return self.storage[i] end
+    if i <= n then
+      local val = self.storage[keySet[i]]
+      i = i + 1
+      return val
+    end
   end
 end
 
