@@ -1,5 +1,10 @@
+-- "include" statements
+
+-- "Class" declaration
 local BaseClass = {}
 BaseClass.__index = BaseClass
+-- Make sure there is a return statement at the end of this file!
+-- e.g. return BaseClass
 
 function BaseClass:new(val)
   local o = setmetatable({}, self)
@@ -29,4 +34,3 @@ function BaseClass:get_value()
 end
 
 return BaseClass
-
