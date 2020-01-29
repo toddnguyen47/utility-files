@@ -1,9 +1,10 @@
 local Config = {}
 local _ABSOLUTE_ROOT_DIRECTORY =
-  "/media/LinuxData/todd/usr/workspaces/lua-workspace/LuaFilesystemTrial/"
+  "/media/LinuxData/todd/usr/Github/PersonalUtilityFiles/utility-files/Lua/LuaFilesystemTrial/"
 
 function Config:addRelativePath(relativePath)
-  local absolutePath = _ABSOLUTE_ROOT_DIRECTORY .. relativePath
+  local absolutePath = _ABSOLUTE_ROOT_DIRECTORY .. "/" .. relativePath
+  absolutePath = string.gsub(absolutePath, "//", "/")
   if (not self:_isAbsolutePathPresent(absolutePath)) then
     package.path = package.path .. ";" .. absolutePath
   end

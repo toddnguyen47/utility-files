@@ -33,10 +33,10 @@ describe("FileSystem Relative Path | ", function()
   test("Test if Module can access root module", function()
     -- Arrange
     Config:addRelativePath("?.lua")
-    Config:addRelativePath("modules/?.lua")
     local RootModule = require "RootModule"
     local rootModule = RootModule:new()
     -- Act
+    Config:addRelativePath("modules/?.lua"))
     local ModuleA = require "ModuleA"
     local moduleA = ModuleA:new(rootModule)
     -- Assert
