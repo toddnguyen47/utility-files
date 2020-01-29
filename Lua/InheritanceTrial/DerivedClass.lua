@@ -12,15 +12,17 @@ DerivedClass.__index = DerivedClass
 -- e.g. return BaseClass
 
 function DerivedClass:new(val1, val2)
-    local parentClass = BaseClass
-    setmetatable(self, {__index = parentClass:new(val1)})
+  local parentClass = BaseClass
+  setmetatable(self, {__index = parentClass:new(val1)})
 
-    local o = setmetatable({}, {__index = self})
-    o.value2 = val2
-    return o
+  local o = setmetatable({}, {__index = self})
+  o.value2 = val2
+  return o
 end
 
-function DerivedClass:get_value() return self.value + self.value2 end
+function DerivedClass:get_value()
+  return self.value + self.value2
+end
 
 local i = DerivedClass:new(1, 2)
 print(i:get_value()) -- > 3
