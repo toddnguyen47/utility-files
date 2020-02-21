@@ -3,7 +3,12 @@ DurstenfeldShuffle.__index = DurstenfeldShuffle
 
 function DurstenfeldShuffle.new(self)
   local newInstance = setmetatable({}, self)
+  newInstance.__init__()
   return newInstance
+end
+
+function DurstenfeldShuffle.__init__(self)
+
 end
 
 function DurstenfeldShuffle.swap(self, tableInput, key1, key2)

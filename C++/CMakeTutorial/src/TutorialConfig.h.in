@@ -1,0 +1,4 @@
+// the configured options and settings for the `InterfaceSample` project
+#define InterfaceSample_VERSION_MAJOR @InterfaceSample_VERSION_MAJOR@
+#define InterfaceSample_VERSION_MINOR @InterfaceSample_VERSION_MINOR@
+#cmakedefine USE_MYMATH
