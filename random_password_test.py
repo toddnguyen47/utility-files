@@ -14,14 +14,17 @@ def string_is_all_lowercase(str_input: str) -> bool:
 
 
 def test_generate_lowercase_password(random_password):
-    s = random_password.generate_random_lowercase_list()
+    random_password.set_current_random_password()
+    s = random_password.current_random_password_list
     assert len(s) > 0
     assert string_is_all_lowercase(s)
 
 
 def test_password_has_one_uppercase(random_password):
-    list1 = random_password.generate_random_lowercase_list()
-    list1 = random_password.uppercase_one_char(list1)
+    random_password.set_current_random_password()
+    random_password.uppercase_one_char()
+
+    list1 = random_password.current_random_password_list
     assert len(list1) > 0
     assert any(x.isupper() for x in list1)
     assert random_password._password_length - \
@@ -29,11 +32,26 @@ def test_password_has_one_uppercase(random_password):
 
 
 def test_password_has_two_numbers(random_password):
-    list1 = random_password.generate_random_lowercase_list()
-    list1 = random_password.uppercase_one_char(list1)
-    list1 = random_password.replace_one_char_with_number(list1)
+    random_password.set_current_random_password()
+    random_password.uppercase_one_char()
+    random_password.replace_two_chars_with_number()
+    list1 = random_password.current_random_password_list
     assert len(list1) > 0
     assert 2 == sum(1 for x in list1 if x.isdigit())
     assert any(x.isdigit() for x in list1)
-    assert random_password._password_length - \
-        3 == len(random_password._index_to_replace)
+    assert random_password._password_length - 3 == len(random_password._index_to_replace)
+
+
+def test_password_has_two_special_chars(random_password):
+    random_password.set_current_random_password()
+    random_password.uppercase_one_char()
+    random_password.replace_two_chars_with_number()
+    random_password.replace_two_chars_with_special_chars()
+
+    list1 = random_password.current_random_password_list
+    assert len(list1) > 0
+    assert 2 == sum(
+        1 for x in list1 if x in random_password.SpecialCharsReplacement()._special_chars_tuple)
+    assert 2 == sum(1 for x in list1 if x.isdigit())
+    assert any(x.isdigit() for x in list1)
+    assert random_password._password_length - 5 == len(random_password._index_to_replace)
