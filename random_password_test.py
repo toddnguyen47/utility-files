@@ -55,3 +55,18 @@ def test_password_has_two_special_chars(random_password):
     assert 2 == sum(1 for x in list1 if x.isdigit())
     assert any(x.isdigit() for x in list1)
     assert random_password._password_length - 5 == len(random_password._index_to_replace)
+
+
+def test_five_replacements(random_password):
+    # Arrange
+    random_password.set_current_random_password()
+    # Act
+    random_password.replace_five_lowercase_chars()
+    # Assert
+    list1 = random_password.current_random_password_list
+    assert len(list1) > 0
+    assert 2 == sum(
+        1 for x in list1 if x in random_password.SpecialCharsReplacement()._special_chars_tuple)
+    assert 2 == sum(1 for x in list1 if x.isdigit())
+    assert any(x.isdigit() for x in list1)
+    assert random_password._password_length - 5 == len(random_password._index_to_replace)
