@@ -5,6 +5,7 @@ from random_password import RandomPassword
 @pytest.fixture(scope="function")
 def random_password():
     random_password = RandomPassword()
+    random_password.reset_index_to_replace()
     yield random_password
     print("Teardown now!")
 

@@ -38,6 +38,12 @@ class RandomPassword:
             self.output_passwords_to_file(filename)
         print("Finished!")
 
+    def output_passwords_to_file(self, filename: str):
+      with open(filename, "w") as text_file:
+          for j in range(0, self._max_passwords):
+              temp_str = "{:03d}. {}\n".format(j + 1, self.generate_password())
+              text_file.write(temp_str)
+
     def generate_password(self) -> str:
         self.reset_index_to_replace()
         self.set_current_random_password()
@@ -64,12 +70,6 @@ class RandomPassword:
 
     def replace_two_chars_with_special_chars(self):
         self._generic_replace(self.SpecialCharsReplacement(), n_times=2)
-
-    def output_passwords_to_file(self, filename: str):
-        with open(filename, "w") as text_file:
-            for j in range(0, self._max_passwords):
-                temp_str = "{:03d}. {}\n".format(j + 1, self.generate_password())
-                text_file.write(temp_str)
 
     def _generic_replace(self, replacement_object: IReplacement, n_times: int = 1):
         for _ in range(n_times):
