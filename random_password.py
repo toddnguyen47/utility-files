@@ -29,6 +29,13 @@ class RandomPassword:
         del self._index_to_replace[random_index]
         return list_input
 
+    def replace_one_char_with_number(self, list_input: List[str]) -> list:
+        random_index = random.randrange(len(self._index_to_replace))
+        char_index_to_replace = self._index_to_replace[random_index]
+        list_input[char_index_to_replace] = str(random.randrange(9 + 1))
+        del self._index_to_replace[random_index]
+        return list_input
+
 
 if __name__ == "__main__":
     random_password = RandomPassword()
