@@ -4,14 +4,17 @@ import getpass
 import argparse
 import sys
 
+
 def hash_password(password: str):
     # uuid is used to generate a random number
     salt = uuid.uuid4().hex
     return hashlib.sha256(salt.encode() + password.encode()).hexdigest() + ":" + salt
 
+
 def check_password(hashed_password, user_password):
     password, salt = hashed_password.split(":")
     return password == hashlib.sha256(salt.encode() + user_password.encode()).hexdigest()
+
 
 def handle_hash_password():
     pwd = getpass.getpass()
@@ -32,7 +35,8 @@ def handle_check_password():
 
 
 # Create argparse
-parser = argparse.ArgumentParser(description="Hash password or check hashed password")
+parser = argparse.ArgumentParser(
+    description="Hash password or check hashed password")
 
 # Create subparsers
 subparsers = parser.add_subparsers(title="Valid commands", dest="command_name")

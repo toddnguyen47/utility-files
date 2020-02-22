@@ -18,17 +18,22 @@ def test_generate_lowercase_password(random_password):
     assert len(s) > 0
     assert string_is_all_lowercase(s)
 
+
 def test_password_has_one_uppercase(random_password):
     list1 = random_password.generate_random_lowercase_list()
     list1 = random_password.uppercase_one_char(list1)
     assert len(list1) > 0
     assert any(x.isupper() for x in list1)
-    assert random_password._password_length - 1 == len(random_password._index_to_replace)
+    assert random_password._password_length - \
+        1 == len(random_password._index_to_replace)
 
-def test_password_has_one_number(random_password):
+
+def test_password_has_two_numbers(random_password):
     list1 = random_password.generate_random_lowercase_list()
     list1 = random_password.uppercase_one_char(list1)
     list1 = random_password.replace_one_char_with_number(list1)
     assert len(list1) > 0
+    assert 2 == sum(1 for x in list1 if x.isdigit())
     assert any(x.isdigit() for x in list1)
-    assert random_password._password_length - 2 == len(random_password._index_to_replace)
+    assert random_password._password_length - \
+        3 == len(random_password._index_to_replace)
