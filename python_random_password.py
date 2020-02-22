@@ -102,19 +102,6 @@ class RandomPassword:
                         j + 1, self.get_password())
                     text_file.write(temp_str)
 
-# filename2 = "random_p2.txt2"
-
-# try:
-# os.remove(filename2)
-# except OSError:
-# pass
-
-# try:
-# copyfile(filename, filename2)
-# os.remove(filename)
-# except OSError:
-# pass
-
 
 max_passwords = 200
 max_files = 4
