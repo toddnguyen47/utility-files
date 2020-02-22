@@ -15,14 +15,14 @@ def string_is_all_lowercase(str_input: str) -> bool:
 
 
 def test_generate_lowercase_password(random_password):
-    random_password.set_current_random_password()
+    random_password.set_current_random_password_all_lowercase()
     s = random_password.current_random_password_list
     assert len(s) > 0
     assert string_is_all_lowercase(s)
 
 
 def test_password_has_one_uppercase(random_password):
-    random_password.set_current_random_password()
+    random_password.set_current_random_password_all_lowercase()
     random_password.uppercase_one_char()
 
     list1 = random_password.current_random_password_list
@@ -33,7 +33,7 @@ def test_password_has_one_uppercase(random_password):
 
 
 def test_password_has_two_numbers(random_password):
-    random_password.set_current_random_password()
+    random_password.set_current_random_password_all_lowercase()
     random_password.uppercase_one_char()
     random_password.replace_two_chars_with_number()
     list1 = random_password.current_random_password_list
@@ -44,7 +44,7 @@ def test_password_has_two_numbers(random_password):
 
 
 def test_password_has_two_special_chars(random_password):
-    random_password.set_current_random_password()
+    random_password.set_current_random_password_all_lowercase()
     random_password.uppercase_one_char()
     random_password.replace_two_chars_with_number()
     random_password.replace_two_chars_with_special_chars()
@@ -60,7 +60,7 @@ def test_password_has_two_special_chars(random_password):
 
 def test_five_replacements(random_password):
     # Arrange
-    random_password.set_current_random_password()
+    random_password.set_current_random_password_all_lowercase()
     # Act
     random_password.replace_five_lowercase_chars()
     # Assert

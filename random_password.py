@@ -46,11 +46,11 @@ class RandomPassword:
 
     def generate_password(self) -> str:
         self.reset_index_to_replace()
-        self.set_current_random_password()
+        self.set_current_random_password_all_lowercase()
         self.replace_five_lowercase_chars()
         return "".join(self.current_random_password_list)
 
-    def set_current_random_password(self):
+    def set_current_random_password_all_lowercase(self):
         self.current_random_password_list = [random.choice(
             string.ascii_lowercase) for _ in range(self._password_length)]
 
