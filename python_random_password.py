@@ -15,47 +15,16 @@ class RandomPassword:
         for i in range(1, self._max_files + 1):
             filename = "".join((self._base_filename, str(i), ".txt"))
             self.output_to_file(filename)
+        print("Finished!")
 
     def output_to_file(self, filename: str):
         with open(filename, "w") as text_file:
             for j in range(0, self._max_passwords):
                 temp_str = "{:03d}. {}\n".format(
-                    j + 1, self.get_password())
+                    j + 1, self.generate_password())
                 text_file.write(temp_str)
 
-    def replace_char(
-            self, generated_pw: list, counter: int, max_counter: int,
-            reg_chars_index_list: list, list_to_draw_from: list):
-        """Replace a character.
-
-        Args:
-            generated_pw (int): The list of characters of the current random password
-            counter (int): The current counter
-            max_counter (int): The max counter
-            reg_chars_index_list (list): list of indices of regular characters
-            list_to_draw_from (list): These characters will replace normal characters
-        """
-        diff = max_counter - counter
-        for i in range(diff):
-            temp_len = len(reg_chars_index_list)
-
-            # Only if the length of reg_chars_index_list is larger than 1
-            if (temp_len <= 1):
-                break
-
-            # First, get a random index number from the list of indices
-            rand_int = random.randint(0, temp_len - 1)
-            # Then, store the random index in a variable
-            random_index = reg_chars_index_list[rand_int]
-
-            # Delete that index from the regular character index list
-            del reg_chars_index_list[rand_int]
-            temp_len = len(reg_chars_index_list)
-
-            random_special_char = random.choice(list_to_draw_from)
-            generated_pw[random_index] = random_special_char
-
-    def get_password(self, size: int = 12):
+    def generate_password(self, size: int = 12):
         """Generate a password.
         """
         at_least_x_numbers = 2
@@ -91,8 +60,9 @@ class RandomPassword:
 
         # If less than x special characters
         if special_chars_counter < at_least_x_special_chars:
-            self.replace_char(generated_pw, special_chars_counter,
-                              at_least_x_special_chars, reg_chars_index_list, self._special_chars_tuple)
+            self.replace_char(
+                generated_pw, special_chars_counter,
+                at_least_x_special_chars, reg_chars_index_list, self._special_chars_tuple)
 
         # Randomly choose a character to capitalize
         # First, get a random index number from the list of indices
@@ -106,6 +76,38 @@ class RandomPassword:
 
         generated_pw = "".join(generated_pw)
         return generated_pw
+
+    def replace_char(
+            self, generated_pw: list, counter: int, max_counter: int,
+            reg_chars_index_list: list, list_to_draw_from: list):
+        """Replace a character.
+
+        Args:
+            generated_pw (int): The list of characters of the current random password
+            counter (int): The current counter
+            max_counter (int): The max counter
+            reg_chars_index_list (list): list of indices of regular characters
+            list_to_draw_from (list): These characters will replace normal characters
+        """
+        diff = max_counter - counter
+        for i in range(diff):
+            temp_len = len(reg_chars_index_list)
+
+            # Only if the length of reg_chars_index_list is larger than 1
+            if (temp_len <= 1):
+                break
+
+            # First, get a random index number from the list of indices
+            rand_int = random.randint(0, temp_len - 1)
+            # Then, store the random index in a variable
+            random_index = reg_chars_index_list[rand_int]
+
+            # Delete that index from the regular character index list
+            del reg_chars_index_list[rand_int]
+            temp_len = len(reg_chars_index_list)
+
+            random_special_char = random.choice(list_to_draw_from)
+            generated_pw[random_index] = random_special_char
 
 
 if __name__ == "__main__":
