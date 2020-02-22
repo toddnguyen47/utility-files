@@ -8,6 +8,20 @@ class RandomPassword:
         self._string_desired = "".join(
             (string.ascii_lowercase, string.digits) + self._special_chars_tuple)
         self._base_filename = "random"
+        self._max_passwords = 200
+        self._max_files = 4
+
+    def execute(self):
+        for i in range(1, self._max_files + 1):
+            filename = "".join((self._base_filename, str(i), ".txt"))
+            self.output_to_file(filename)
+
+    def output_to_file(self, filename: str):
+        with open(filename, "w") as text_file:
+            for j in range(0, self._max_passwords):
+                temp_str = "{:03d}. {}\n".format(
+                    j + 1, self.get_password())
+                text_file.write(temp_str)
 
     def replace_char(
             self, generated_pw: list, counter: int, max_counter: int,
@@ -64,7 +78,7 @@ class RandomPassword:
             char = generated_pw[i]
             if (char.isdigit()):
                 number_counter += + 1
-            elif char in self._special_chars:
+            elif char in self._special_chars_tuple:
                 special_chars_counter += 1
             else:
                 # Just a regular character
@@ -78,7 +92,7 @@ class RandomPassword:
         # If less than x special characters
         if special_chars_counter < at_least_x_special_chars:
             self.replace_char(generated_pw, special_chars_counter,
-                              at_least_x_special_chars, reg_chars_index_list, special_chars)
+                              at_least_x_special_chars, reg_chars_index_list, self._special_chars_tuple)
 
         # Randomly choose a character to capitalize
         # First, get a random index number from the list of indices
@@ -93,15 +107,7 @@ class RandomPassword:
         generated_pw = "".join(generated_pw)
         return generated_pw
 
-    def output_to_file(self, filename):
-        for i in range(1, max_files + 1):
-            filename = "".join((self._base_filename, str(i), ".txt2"))
-            with open(filename, "w") as text_file:
-                for j in range(0, max_passwords):
-                    temp_str = "{:03d}. {}\n".format(
-                        j + 1, self.get_password())
-                    text_file.write(temp_str)
 
-
-max_passwords = 200
-max_files = 4
+if __name__ == "__main__":
+    random_password = RandomPassword()
+    random_password.execute()
