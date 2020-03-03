@@ -2,3 +2,7 @@
 #define InterfaceSample_VERSION_MAJOR @InterfaceSample_VERSION_MAJOR@
 #define InterfaceSample_VERSION_MINOR @InterfaceSample_VERSION_MINOR@
 #cmakedefine USE_MYMATH
+
+// Does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP

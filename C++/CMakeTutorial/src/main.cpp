@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int calculateSqrt(const double inputValue);
+double calculateSqrt(const double inputValue);
 
 int main(int argc, char **argv)
 {
@@ -33,7 +33,7 @@ int main(int argc, char **argv)
   return 0;
 }
 
-int calculateSqrt(const double inputValue)
+double calculateSqrt(const double inputValue)
 {
   // calculate square root
 #ifdef USE_MYMATH
