@@ -1,5 +1,5 @@
-#include "unity.h"
-#include "DumbExample.h"
+#include "unity/unity.h"
+#include "dumbExample/DumbExample.h"
 
 void setUp() {}
 void tearDown() {}
