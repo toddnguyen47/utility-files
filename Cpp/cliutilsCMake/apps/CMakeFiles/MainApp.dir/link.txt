@@ -1,0 +1,1 @@
+/usr/bin/cc    CMakeFiles/MainApp.dir/app.c.o  -o MainApp  ../src/libDumbExampleLib.a 

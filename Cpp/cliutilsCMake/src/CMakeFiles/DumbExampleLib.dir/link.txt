@@ -1,0 +1,2 @@
+/usr/bin/ar qc libDumbExampleLib.a  CMakeFiles/DumbExampleLib.dir/DumbExample.c.o
+/usr/bin/ranlib libDumbExampleLib.a
