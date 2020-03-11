@@ -1,4 +1,5 @@
-#include "unity/unity.h"
+//#include "unity/unity.h"
+#include "unity/fixture/src/unity_fixture.h"
 #include "dumbExample/DumbExample.h"
 
 void setUp() {}
