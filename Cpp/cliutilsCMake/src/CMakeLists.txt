@@ -14,7 +14,11 @@ set(HEADER_LIST "${DumbExampleProject_SOURCE_DIR}/include/dumbExample/DumbExampl
 add_library(DumbExampleLib DumbExample.c ${HEADER_LIST})
 
 # We need this directory, and users of our library will need it too
-target_include_directories(DumbExampleLib PUBLIC ../include)
+target_include_directories(DumbExampleLib
+PUBLIC
+  "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
+  "$<INSTALL_INTERFACE:include>"
+)
 
 # IDEs should put the headers in a nice place
 source_group(TREE "${PROJECT_SOURCE_DIR}/include" PREFIX "Header Files" FILES ${HEADER_LIST})
