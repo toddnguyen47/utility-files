@@ -2,7 +2,7 @@ FROM alpine
 ARG default_dir="/opt/files"
 
 # Install pre-reqs
-RUN apk add \
+RUN apk update && apk add --no-cache \
   bash \
   build-base \
   curl \
