@@ -6,19 +6,32 @@ html {
 body {
   font-size: 20rem;
   font-family: sans-serif;
-  width: 1200rem;
-  margin: 40rem auto 40rem auto;
+  /* width: 1200rem;
+  margin: 40rem auto 40rem auto; */
 }
 
-.parent {
+.flex-container {
   display: flex;
-  height: 300rem;
+  height: 500rem;
   background-color: aquamarine;
+
+  /* Define the flow direction and if we allow the items to swap 
+   * Remember, this is the same as
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+
+  /* Define how to distribute the remaining space */
+  justify-content: space-around;
 }
 
 .child {
-  width: 100rem;
+  width: 150rem;
   height: 100rem;
-  margin: auto; /* Center! */
   background-color: thistle;
+  text-align: center;
+
+  /* Center! */
+  margin: auto;
 }
