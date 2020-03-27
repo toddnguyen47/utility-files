@@ -35,3 +35,45 @@ body {
   /* Center! */
   margin: auto;
 }
+
+.navigation a {
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  padding: 10rem;
+  color: white;
+}
+
+.navigation a:hover {
+  background: #1565C0;
+}
+
+/* Small Screens */
+.navigation {
+  /* Use a column direction instead */
+  flex-direction: column;
+  background-color: steelblue;
+  list-style: none;
+  margin: 0;
+
+  display: flex;
+  flex-flow: row-wrap;
+}
+
+/* Medium screens */
+@media all and (min-width: 501px) {
+  .navigation {
+    flex-direction: row;
+    /* Center the items by evenly distributing empty space around items */
+    justify-content: space-around;
+  }
+}
+
+/* Large screens */
+@media all and (min-width: 801px) {
+  .navigation {
+    flex-direction: row;
+    /* Aligns items to the end line on main axis */
+    justify-content: flex-end;
+  }
+}
