@@ -1,3 +1,5 @@
-*.idea
 __pycache__
+.vscode
+*.idea
 random*.txt
+hashedPassword.txt

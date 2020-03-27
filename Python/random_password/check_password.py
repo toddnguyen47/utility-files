@@ -4,6 +4,8 @@ import getpass
 import argparse
 import sys
 
+hashed_password_file = "hashedPassword.txt"
+
 
 def hash_password(password: str):
     # uuid is used to generate a random number
@@ -25,7 +27,10 @@ def handle_hash_password():
 
 
 def handle_check_password():
-    hashed_password = 'a07b30e8746513cfe655d8e110dcdcf3fd2ed98734c2b77ac4d49abced11570e:1ba47dc40ea04163a97c8b72791d97a2'
+    with open(hashed_password_file, "r") as file:
+        hashed_password = file.read()
+    if hashed_password.strip() == "":
+        raise RuntimeError("`{}` file is empty or nonexistent".format(hashed_password_file))
     user_input = input("Please enter a password: ")
 
     if check_password(hashed_password, user_input):
