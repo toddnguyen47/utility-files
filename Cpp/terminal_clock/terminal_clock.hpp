@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iomanip> // put_time
 #include <thread>
-#include <string>
 
 class TerminalClock
 {
