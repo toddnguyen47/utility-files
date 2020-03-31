@@ -1,7 +1,6 @@
 #!/bin/bash
 
-rm -rf build
-mkdir build
+mkdir -p build
 cd build
 cmake -G "Ninja" ../
 cmake --build .
