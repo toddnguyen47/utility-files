@@ -16,6 +16,7 @@ int main()
 {
   printBinary(10);
   printBinary(4);
+  printBinary(20);
   return 0;
 }
 

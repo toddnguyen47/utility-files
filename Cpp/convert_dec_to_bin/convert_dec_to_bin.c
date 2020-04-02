@@ -5,7 +5,7 @@
  */
 char *convertDecimalToBinary(int number)
 {
-  char *buffer = (char *)malloc(sizeof(char) * 100);
+  char buffer[100];
   buffer[0] = '\0';
   int size = 0;
   while (number > 0)
@@ -14,13 +14,11 @@ char *convertDecimalToBinary(int number)
     number = number >> 1;
     char temp_buffer[100];
     sprintf(temp_buffer, "%d", mod_num);
-    buffer = strcat(buffer, temp_buffer);
+    strcat(buffer, temp_buffer);
     size += 1;
   }
 
   char *binary_buffer = reverse_buffer_into_smaller_buffer(buffer, size);
-  free(buffer);
-
   return binary_buffer;
 }
 
