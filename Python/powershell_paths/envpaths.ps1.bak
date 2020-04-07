@@ -1,0 +1,7 @@
+$env:PATH += ";C:\Users\i1A771792\opt\bin"
+$env:PATH += ";C:\Program Files\7-Zip"
+
+# Ref: https://stackoverflow.com/a/2571200
+[Environment]::SetEnvironmentVariable("PATH", $env:PATH, [System.EnvironmentVariableTarget]::User)
+
+[Environment]::GetEnvironmentVariable("PATH", [System.EnvironmentVariableTarget]::User)
