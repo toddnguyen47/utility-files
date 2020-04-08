@@ -16,10 +16,12 @@ env_path_list = env_path.split(_SEPARATOR)
 env_path_set = set()
 
 for path in extra_paths:
-    env_path_set.add(path)
+    if path:
+        env_path_set.add(path)
 
 for ep in env_path_list:
-    env_path_set.add(ep)
+    if ep:
+        env_path_set.add(ep)
 
 env_path = _SEPARATOR.join(env_path_set)
 env_path = "\"{}\"".format(env_path)
