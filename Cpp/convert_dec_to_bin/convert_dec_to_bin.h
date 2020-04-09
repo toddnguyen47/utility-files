@@ -9,6 +9,6 @@
 char *convertDecimalToBinary(int number);
 
 // "private"
-char *reverse_buffer_into_smaller_buffer(char *src, int dest_size);
+char *_reverse_buffer_into_smaller_buffer(char *src, int dest_size);
 
 #endif // CONVERT_DEC_TO_BIN_H_

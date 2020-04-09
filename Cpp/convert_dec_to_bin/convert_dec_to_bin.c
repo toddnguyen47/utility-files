@@ -18,11 +18,11 @@ char *convertDecimalToBinary(int number)
     size += 1;
   }
 
-  char *binary_buffer = reverse_buffer_into_smaller_buffer(buffer, size);
+  char *binary_buffer = _reverse_buffer_into_smaller_buffer(buffer, size);
   return binary_buffer;
 }
 
-char *reverse_buffer_into_smaller_buffer(char *src, int dest_size)
+char *_reverse_buffer_into_smaller_buffer(char *src, int dest_size)
 {
   // Add 1 more to dest_size to account for null terminator
   char *binary_buffer = malloc(sizeof(char) * (dest_size + 1));

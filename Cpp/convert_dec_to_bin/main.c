@@ -8,9 +8,7 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 #include "convert_dec_to_bin.h"
 
-char *convertDecimalToBinary(int number);
 void printBinary(int decimal);
-char *reverse_buffer_into_smaller_buffer(char *src, int dest_size);
 
 int main()
 {
