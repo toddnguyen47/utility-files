@@ -19,10 +19,15 @@ def check_password(hashed_password, user_password):
 
 
 def handle_hash_password():
-    pwd = getpass.getpass()
+    pwd = getpass.getpass(prompt="Password: ")
+    pwd2 = getpass.getpass(prompt="Enter password again: ")
+    if pwd != pwd2:
+        print("Password do not match. Now exiting.")
+        exit(1)
+
     hashed = hash_password(pwd)
-    print("Exported to delete.txt")
-    with open("delete.txt", "w") as file:
+    print("Exported to {}".format(hashed_password_file))
+    with open(hashed_password_file, "w") as file:
         file.write(hashed)
 
 
