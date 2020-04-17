@@ -1,0 +1,28 @@
+-- Ref: http://olivinelabs.com/busted/#asserts
+local say = require("say")
+-- Ref: https://stackoverflow.com/a/46358534
+local assert = require("luassert")
+
+---Example usage:
+---assert.is_substring("LeBlanc is my favorite League champion", "LeBlanc") # will pass
+---assert.is_substring("LeBlanc is my favorite League champion", "Kassadin") # will FAIL
+---@param state any
+---@param arguments table
+---arguments[1] is the full string, arguments[2] is the substring to look for
+---@return boolean
+local function substring(state, arguments)
+  if not type(arguments[1]) == "table" or #arguments ~= 2 then return false end
+
+  local str = arguments[1]
+  local substr = arguments[2]
+
+  return string.find(str, substr) ~= nil
+end
+
+say:set("assertion.substring.positive", "\nExpected: \n%s \nto have a substring of\n%s")
+say:set("assertion.substring.negative", "\nExpected: \n%s \nto not have a substring of\n%s")
+
+-- Ref: https://github.com/Olivine-Labs/luassert/blob/master/src/assert.lua#L87
+assert:register("assertion", "substring", substring, "assertion.substring.positive",
+                "assertion.substring.negative")
+
