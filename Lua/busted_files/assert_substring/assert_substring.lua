@@ -11,7 +11,7 @@ local assert = require("luassert")
 ---arguments[1] is the full string, arguments[2] is the substring to look for
 ---@return boolean
 local function substring(state, arguments)
-  if not type(arguments[1]) == "table" or #arguments ~= 2 then return false end
+  if #arguments ~= 2 then return false end
 
   local str = arguments[1]
   local substr = arguments[2]
