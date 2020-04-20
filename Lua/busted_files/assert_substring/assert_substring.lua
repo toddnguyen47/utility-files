@@ -11,7 +11,10 @@ local assert = require("luassert")
 ---arguments[1] is the full string, arguments[2] is the substring to look for
 ---@return boolean
 local function substring(state, arguments)
-  if #arguments ~= 2 then return false end
+  level = (level or 1) + 1
+  local argcnt = arguments["n"]
+  assert(argcnt > 1, say("assertion.internal.argtolittle", {"substring", 2, tostring(argcnt)}),
+    level)
 
   local str = arguments[1]
   local substr = arguments[2]
@@ -20,7 +23,7 @@ local function substring(state, arguments)
 end
 
 say:set("assertion.substring.positive", "\nExpected: \n%s \nto have a substring of\n%s")
-say:set("assertion.substring.negative", "\nExpected: \n%s \nto not have a substring of\n%s")
+say:set("assertion.substring.negative", "\nExpected: \n%s \nto NOT have a substring of\n%s")
 
 -- Ref: https://github.com/Olivine-Labs/luassert/blob/master/src/assert.lua#L87
 assert:register("assertion", "substring", substring, "assertion.substring.positive",
