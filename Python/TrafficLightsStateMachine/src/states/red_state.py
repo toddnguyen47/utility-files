@@ -14,3 +14,6 @@ class RedState(State):
 
     def to_string(self) -> str:
         return "Red"
+
+    def execute(self):
+        print("Cars are stopped")

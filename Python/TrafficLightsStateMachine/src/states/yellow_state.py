@@ -14,3 +14,6 @@ class YellowState(State):
 
     def to_string(self) -> str:
         return "Yellow"
+
+    def execute(self):
+        print("Cars should slow down.")

@@ -7,3 +7,6 @@ class State:
 
     def to_string(self) -> str:
         raise NotImplementedError()
+
+    def execute(self):
+        raise NotImplementedError()
