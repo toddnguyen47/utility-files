@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Ref: https://stackoverflow.com/a/10548919
+# merge project-a into project-b
 cd path/to/project-b
 git remote add project-a path/to/project-a
 git fetch project-a --tags
