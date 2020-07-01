@@ -1,4 +1,5 @@
-FROM alpine
+ARG FROM_IMAGE
+FROM ${FROM_IMAGE}
 ARG default_dir="/opt/files"
 
 # Install pre-reqs

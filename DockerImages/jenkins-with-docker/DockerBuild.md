@@ -7,7 +7,11 @@
 
 ```bash
 HOST_DOCKER_GROUP_ID="$(getent group docker | cut -d: -f3)"
+FROM_IMAGE="jenkins/jenkins"
+
+docker pull "${FROM_IMAGE}"
 docker build --build-arg DOCKER_GROUP_ID="$HOST_DOCKER_GROUP_ID" \
+  --build-arg FROM_IMAGE="${FROM_IMAGE}" \
   --build-arg http_proxy="http://YOUR_PROXY_HERE:PORT_NUMBER" \
   --build-arg https_proxy="http://YOUR_PROXY_HERE:PORT_NUMBER" \
   --tag local-jenkins-image:1.0 \
