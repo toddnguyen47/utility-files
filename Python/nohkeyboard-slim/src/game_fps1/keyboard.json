@@ -29,7 +29,7 @@
         "X": 42,
         "Y": 74
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "TAB"
     },
     {
@@ -61,7 +61,7 @@
         "X": 252,
         "Y": 206
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "SPACE"
     },
     {
@@ -349,7 +349,7 @@
         "X": 48,
         "Y": 118
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "CAPS"
     },
     {
@@ -861,7 +861,7 @@
         "X": 59,
         "Y": 162
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "SHIFT"
     },
     {
@@ -893,7 +893,7 @@
         "X": 41,
         "Y": 206
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "CTRL"
     },
     {
@@ -925,7 +925,7 @@
         "X": 102,
         "Y": 206
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "WIN"
     },
     {
@@ -957,7 +957,7 @@
         "X": 158,
         "Y": 206
       },
-      "ChangeOnCaps": true,
+      "ChangeOnCaps": false,
       "ShiftText": "ALT"
     }
   ],

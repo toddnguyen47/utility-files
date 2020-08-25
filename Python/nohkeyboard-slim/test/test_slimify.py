@@ -111,14 +111,11 @@ def slimify_object():
     yield slimify
 
 
-def mult_and_floor(input1: float, input2: float) -> float:
-    return round(input1 * input2)
+def mult_and_floor(slimify_object: Slimify, input1: float, input2: float) -> float:
+    return slimify_object.round_to_nearest_integer(input1 * input2)
 
 
 class TestSlimify:
-    def test_get_pos_size(self, slimify_object):
-        assert slimify_object._get_pos_size_(100) == 75
-
     def test_change_width_height(self, slimify_object):
         slimify_object.change_width_height()
         boundaries = slimify_object.data_["Elements"][0]["Boundaries"]
@@ -127,24 +124,24 @@ class TestSlimify:
         slimify_object.y_offset = 2
 
         assert boundaries[0]["X"] \
-            == mult_and_floor(9, slimify_object.percent_shrink_) + slimify_object.x_offset
+            == mult_and_floor(slimify_object, 9, slimify_object.percent_shrink_) + slimify_object.x_offset
         assert boundaries[0]["Y"] \
-            == mult_and_floor(53, slimify_object.percent_shrink_) + slimify_object.y_offset
+            == mult_and_floor(slimify_object, 53, slimify_object.percent_shrink_) + slimify_object.y_offset
 
         assert boundaries[1]["X"] \
-            == mult_and_floor(76, slimify_object.percent_shrink_) + slimify_object.x_offset
+            == mult_and_floor(slimify_object, 76, slimify_object.percent_shrink_) + slimify_object.x_offset
         assert boundaries[1]["Y"] \
-            == mult_and_floor(53, slimify_object.percent_shrink_) + slimify_object.y_offset
+            == mult_and_floor(slimify_object, 53, slimify_object.percent_shrink_) + slimify_object.y_offset
 
         assert boundaries[2]["X"] \
-            == mult_and_floor(76, slimify_object.percent_shrink_) + slimify_object.x_offset
+            == mult_and_floor(slimify_object, 76, slimify_object.percent_shrink_) + slimify_object.x_offset
         assert boundaries[2]["Y"] \
-            == mult_and_floor(96, slimify_object.percent_shrink_) + slimify_object.y_offset
+            == mult_and_floor(slimify_object, 96, slimify_object.percent_shrink_) + slimify_object.y_offset
 
         assert boundaries[3]["X"] \
-            == mult_and_floor(9, slimify_object.percent_shrink_) + slimify_object.x_offset
+            == mult_and_floor(slimify_object, 9, slimify_object.percent_shrink_) + slimify_object.x_offset
         assert boundaries[3]["Y"] \
-            == mult_and_floor(96, slimify_object.percent_shrink_) + slimify_object.y_offset
+            == mult_and_floor(slimify_object, 96, slimify_object.percent_shrink_) + slimify_object.y_offset
 
     def test_set_old_min_x_and_min_y(self, slimify_object):
         slimify_object.change_width_height()
@@ -153,7 +150,7 @@ class TestSlimify:
 
     def test_set_new_min_x_and_min_y(self, slimify_object):
         slimify_object.change_width_height()
-        assert slimify_object.new_top_left_x_ == round(
+        assert slimify_object.new_top_left_x_ == slimify_object.round_to_nearest_integer(
             9 * slimify_object.percent_shrink_)
-        assert slimify_object.new_top_left_y_ == round(
+        assert slimify_object.new_top_left_y_ == slimify_object.round_to_nearest_integer(
             9 * slimify_object.percent_shrink_)

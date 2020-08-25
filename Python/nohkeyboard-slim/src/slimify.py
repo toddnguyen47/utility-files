@@ -1,4 +1,5 @@
 import json
+import math
 
 
 class Slimify:
@@ -34,6 +35,9 @@ class Slimify:
 
         print("Finished writing to {}".format(self.output_file_))
 
+    def round_to_nearest_integer(self, float_input: float) -> int:
+        return math.floor(float_input + 0.5)
+
     #######################################################
     #  PRIVATE FUNCTIONS
     #######################################################
@@ -55,18 +59,13 @@ class Slimify:
             for boundary in elem["Boundaries"]:
                 self.old_top_left_x_ = min(self.old_top_left_x_, boundary["X"])
                 self.old_top_left_y_ = min(self.old_top_left_y_, boundary["Y"])
-                boundary["X"] = round(
+                boundary["X"] = self.round_to_nearest_integer(
                     boundary["X"] * self.percent_shrink_)
-                boundary["Y"] = round(
+                boundary["Y"] = self.round_to_nearest_integer(
                     boundary["Y"] * self.percent_shrink_)
 
                 self.new_top_left_x_ = min(self.new_top_left_x_, boundary["X"])
                 self.new_top_left_y_ = min(self.new_top_left_y_, boundary["Y"])
-
-            elem["TextPosition"]["X"] = round(
-                elem["TextPosition"]["X"] * self.percent_shrink_)
-            elem["TextPosition"]["Y"] = round(
-                elem["TextPosition"]["Y"] * self.percent_shrink_)
 
     def _set_offset(self):
         self.x_offset = self.old_top_left_x_ - self.new_top_left_x_
@@ -75,16 +74,18 @@ class Slimify:
             for boundary in elem["Boundaries"]:
                 boundary["X"] += self.x_offset
                 boundary["Y"] += self.y_offset
-            elem["TextPosition"]["X"] += self.x_offset
-            elem["TextPosition"]["Y"] += self.y_offset
-
-    def _get_pos_size_(self, value: int) -> int:
-        if value > self._min_val_:
-            value = round(value * self.percent_shrink_)
-        return value
+            min_x = elem["Boundaries"][0]["X"]
+            min_y = elem["Boundaries"][0]["Y"]
+            max_x = elem["Boundaries"][2]["X"]
+            max_y = elem["Boundaries"][2]["Y"]
+            elem["TextPosition"]["X"] = self.round_to_nearest_integer(
+                (min_x + max_x) / 2)
+            elem["TextPosition"]["Y"] = self.round_to_nearest_integer(
+                (min_y + max_y) / 2)
 
     def _change_amount(self, key: str):
-        self.data_[key] = round(self.data_[key] * self.percent_shrink_)
+        self.data_[key] = self.round_to_nearest_integer(
+            self.data_[key] * self.percent_shrink_)
 
 
 if __name__ == "__main__":
