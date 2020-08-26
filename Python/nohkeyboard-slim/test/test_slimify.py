@@ -102,7 +102,39 @@ def slimify_object():
                 },
                 "ChangeOnCaps": False,
                 "ShiftText": "~"
-            }
+            },
+            {
+                "__type": "KeyboardKey",
+                "Id": 2,
+                "Boundaries": [
+                    {
+                        "X": 53,
+                        "Y": 9
+                    },
+                    {
+                        "X": 96,
+                        "Y": 9
+                    },
+                    {
+                        "X": 96,
+                        "Y": 52
+                    },
+                    {
+                        "X": 53,
+                        "Y": 52
+                    }
+                ],
+                "KeyCodes": [
+                    49
+                ],
+                "Text": "1",
+                "TextPosition": {
+                    "X": 74,
+                    "Y": 30
+                },
+                "ChangeOnCaps": False,
+                "ShiftText": "!"
+            },
         ],
         "Height": 237,
         "Version": 2,
@@ -116,41 +148,71 @@ def mult_and_floor(slimify_object: Slimify, input1: float, input2: float) -> flo
 
 
 class TestSlimify:
-    def test_change_width_height(self, slimify_object):
-        slimify_object.change_width_height()
-        boundaries = slimify_object.data_["Elements"][0]["Boundaries"]
+    def test_two_by_two_column(self, slimify_object):
+        slimify_object.sort_key_data()
+        assert slimify_object.data_["Elements"][0]["Boundaries"][0]["X"] == 9
+        assert slimify_object.data_["Elements"][0]["Boundaries"][0]["Y"] == 9
 
-        slimify_object.x_offset = 2
-        slimify_object.y_offset = 2
+        assert slimify_object.data_["Elements"][1]["Boundaries"][0]["X"] == 53
+        assert slimify_object.data_["Elements"][1]["Boundaries"][0]["Y"] == 9
 
-        assert boundaries[0]["X"] \
-            == mult_and_floor(slimify_object, 9, slimify_object.percent_shrink_) + slimify_object.x_offset
-        assert boundaries[0]["Y"] \
-            == mult_and_floor(slimify_object, 53, slimify_object.percent_shrink_) + slimify_object.y_offset
+        assert slimify_object.data_["Elements"][2]["Boundaries"][0]["X"] == 9
+        assert slimify_object.data_["Elements"][2]["Boundaries"][0]["Y"] == 53
 
-        assert boundaries[1]["X"] \
-            == mult_and_floor(slimify_object, 76, slimify_object.percent_shrink_) + slimify_object.x_offset
-        assert boundaries[1]["Y"] \
-            == mult_and_floor(slimify_object, 53, slimify_object.percent_shrink_) + slimify_object.y_offset
+        assert slimify_object.data_["Elements"][3]["Boundaries"][0]["X"] == 77
+        assert slimify_object.data_["Elements"][3]["Boundaries"][0]["Y"] == 53
 
-        assert boundaries[2]["X"] \
-            == mult_and_floor(slimify_object, 76, slimify_object.percent_shrink_) + slimify_object.x_offset
-        assert boundaries[2]["Y"] \
-            == mult_and_floor(slimify_object, 96, slimify_object.percent_shrink_) + slimify_object.y_offset
+    def test_slimming(self, slimify_object):
+        slimify_object.sort_key_data()
+        slimify_object.slim_x_y_values()
 
-        assert boundaries[3]["X"] \
-            == mult_and_floor(slimify_object, 9, slimify_object.percent_shrink_) + slimify_object.x_offset
-        assert boundaries[3]["Y"] \
-            == mult_and_floor(slimify_object, 96, slimify_object.percent_shrink_) + slimify_object.y_offset
+        # '`' key
+        assert slimify_object.data_[
+            "Elements"][0]["Boundaries"][0]["X"] == 9
+        assert slimify_object.data_[
+            "Elements"][0]["Boundaries"][0]["Y"] == 9
 
-    def test_set_old_min_x_and_min_y(self, slimify_object):
-        slimify_object.change_width_height()
-        assert slimify_object.old_top_left_x_ == 9
-        assert slimify_object.old_top_left_y_ == 9
+        # '1' key
+        # 32 = 43 * 0.75
+        assert slimify_object.data_[
+            "Elements"][1]["Boundaries"][0]["X"] == 9 + 32 + 1
+        assert slimify_object.data_[
+            "Elements"][1]["Boundaries"][0]["Y"] == 9
 
-    def test_set_new_min_x_and_min_y(self, slimify_object):
-        slimify_object.change_width_height()
-        assert slimify_object.new_top_left_x_ == slimify_object.round_to_nearest_integer(
-            9 * slimify_object.percent_shrink_)
-        assert slimify_object.new_top_left_y_ == slimify_object.round_to_nearest_integer(
-            9 * slimify_object.percent_shrink_)
+        # 'Tab' key
+        assert slimify_object.data_[
+            "Elements"][2]["Boundaries"][0]["X"] == 9
+        assert slimify_object.data_[
+            "Elements"][2]["Boundaries"][0]["Y"] == 9 + 32 + 1
+
+        # 'Q' key
+        # Tab size is 76 - 9 = 67, 67 * 0.75 = 50
+        assert slimify_object.data_[
+            "Elements"][3]["Boundaries"][0]["X"] == 9 + 50 + 1
+        assert slimify_object.data_[
+            "Elements"][3]["Boundaries"][0]["Y"] == 9 + 32 + 1
+
+    def test_text_after_slimming(self, slimify_object):
+        slimify_object.sort_key_data()
+        slimify_object.slim_x_y_values()
+        # '`' should be at (25, 25)
+        assert slimify_object.data_["Elements"][0]["TextPosition"]["X"] == 25
+        assert slimify_object.data_["Elements"][0]["TextPosition"]["Y"] == 25
+        # 'Q' should be at (58, 25)
+        assert slimify_object.data_["Elements"][1]["TextPosition"]["X"] == 58
+        assert slimify_object.data_["Elements"][1]["TextPosition"]["Y"] == 25
+        # 'Tab' should be at (34, 58)
+        assert slimify_object.data_["Elements"][2]["TextPosition"]["X"] == 34
+        assert slimify_object.data_["Elements"][2]["TextPosition"]["Y"] == 58
+        # 'Q' should be at (76, 58)
+        assert slimify_object.data_["Elements"][3]["TextPosition"]["X"] == 76
+        assert slimify_object.data_["Elements"][3]["TextPosition"]["Y"] == 58
+
+    def test_keyboard_size(self, slimify_object):
+        old_width = slimify_object.data_["Width"]
+        old_height = slimify_object.data_["Height"]
+        slimify_object.slim_x_y_values()
+        assert slimify_object.data_["Width"] == slimify_object.round_to_nearest_integer(
+            old_width * slimify_object.percent_shrink_)
+        assert slimify_object.data_["Height"] == slimify_object.round_to_nearest_integer(
+            old_height * slimify_object.percent_shrink_)
