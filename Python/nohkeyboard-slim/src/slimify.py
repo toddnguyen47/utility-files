@@ -4,7 +4,7 @@ import math
 
 class Slimify:
     def __init__(self):
-        self.json_file_ = "game_fps1/keyboard.json"
+        self._json_file_ = self._read_config_json()
         self.output_file_ = "keyboard-output.json"
         self.percent_shrink_ = 0.75
 
@@ -61,8 +61,13 @@ class Slimify:
             self.y_before_changed = 0
             self.y_after_changed = 0
 
+    def _read_config_json(self) -> str:
+        with open("config.json", "r") as file:
+            data = json.load(file)
+        return data["keyboard_filepath"]
+
     def _read_json(self):
-        with open(self.json_file_, "r") as file:
+        with open(self._json_file_, "r") as file:
             self.data_: dict = json.load(file)
 
     def _set_width_and_height(self):
