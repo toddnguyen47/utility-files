@@ -7,6 +7,7 @@ class Slimify:
         self._json_file_ = self._read_config_json()
         self.output_file_ = "keyboard-output.json"
         self.percent_shrink_ = 0.75
+        self.starting_id_ = 0
 
         self.old_top_left_x_ = 1 << 15
         self.old_top_left_y_ = 1 << 15
@@ -22,6 +23,7 @@ class Slimify:
         self.set_data()
         self.sort_key_data()
         self.slim_x_y_values()
+        self._reassign_id()
         self.output()
 
     def sort_key_data(self):
@@ -154,6 +156,11 @@ class Slimify:
         self._prev_coords.y_after_changed = self._coords.bot_right_y
         self._coords.bot_right_x = self._coords.top_left_x + self._coords.diff_x
         self._prev_coords.x_after_changed = self._coords.bot_right_x
+
+    def _reassign_id(self):
+        for elem in self.data_["Elements"]:
+            elem["Id"] = self.starting_id_
+            self.starting_id_ += 1
 
 
 if __name__ == "__main__":

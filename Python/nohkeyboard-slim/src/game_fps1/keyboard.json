@@ -546,6 +546,38 @@
     },
     {
       "__type": "KeyboardKey",
+      "Id": 30,
+      "Boundaries": [
+        {
+          "X": 309,
+          "Y": 97
+        },
+        {
+          "X": 352,
+          "Y": 97
+        },
+        {
+          "X": 352,
+          "Y": 140
+        },
+        {
+          "X": 309,
+          "Y": 140
+        }
+      ],
+      "KeyCodes": [
+        72
+      ],
+      "Text": "h",
+      "TextPosition": {
+        "X": 330,
+        "Y": 118
+      },
+      "ChangeOnCaps": true,
+      "ShiftText": "H"
+    },
+    {
+      "__type": "KeyboardKey",
       "Id": 12,
       "Boundaries": [
         {
