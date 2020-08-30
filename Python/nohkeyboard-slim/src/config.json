@@ -1,3 +1,4 @@
 {
-  "keyboard_filepath": "game_fps1/keyboard.json"
+  "keyboard_filepath": "game_fps1/keyboard.json",
+  "percent_to_shrink": 80
 }

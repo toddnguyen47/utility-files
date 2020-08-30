@@ -1,12 +1,12 @@
 import json
 import math
+from typing import Tuple
 
 
 class Slimify:
     def __init__(self):
-        self._json_file_ = self._read_config_json()
+        self._json_file_, self.percent_shrink_  = self._read_config_json()
         self.output_file_ = "keyboard-output.json"
-        self.percent_shrink_ = 0.75
         self.starting_id_ = 0
 
         self.old_top_left_x_ = 1 << 15
@@ -63,10 +63,12 @@ class Slimify:
             self.y_before_changed = 0
             self.y_after_changed = 0
 
-    def _read_config_json(self) -> str:
+    def _read_config_json(self) -> Tuple[str, int]:
         with open("config.json", "r") as file:
             data = json.load(file)
-        return data["keyboard_filepath"]
+        keyboard_filepath = data["keyboard_filepath"]
+        percent_to_shrink = int(data["percent_to_shrink"]) / 100.0
+        return keyboard_filepath, percent_to_shrink
 
     def _read_json(self):
         with open(self._json_file_, "r") as file:
