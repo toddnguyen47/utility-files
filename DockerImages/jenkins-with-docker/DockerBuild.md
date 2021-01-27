@@ -21,14 +21,15 @@ docker build --build-arg DOCKER_GROUP_ID="$HOST_DOCKER_GROUP_ID" \
 # Run Built Docker Image
 
 ```bash
-docker container run --name jenkins-lua --detach --rm \
-  --network jenkins-lua-network \
+docker container run --name local-jenkins --detach --rm \
   --env http_proxy='http://YOUR_PROXY_HERE:PORT_NUMBER' \
   --env https_proxy='http://YOUR_PROXY_HERE:PORT_NUMBER' \
+  --network jenkins-network \
   --volume jenkins-docker-certs:/certs/client \
-  --volume jenkins-lua-data:/var/jenkins_home \
+  --volume jenkins-data:/var/jenkins_home \
   --volume "$HOME":/home \
   --volume /var/run/docker.sock:/var/run/docker.sock \
   -p 8080:8080 \
   local-jenkins-image:1.0
+
 ```

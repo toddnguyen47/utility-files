@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -euxo pipefail
+
 FROM_IMAGE="jenkins/jenkins"
 HOST_DOCKER_GROUP_ID="$(getent group docker | cut -d: -f3)"
 
