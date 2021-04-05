@@ -1,11 +1,9 @@
+pub mod cars;
+
 use cars::icar::ICar;
 
-mod cars;
-
 pub fn get_make(car: &impl ICar) -> String {
-    let make = car.get_make();
-    println!("Car make is: {}", make);
-    make
+    car.get_make()
 }
 
 #[cfg(test)]
