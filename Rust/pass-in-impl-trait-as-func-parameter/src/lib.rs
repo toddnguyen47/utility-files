@@ -20,7 +20,7 @@ mod tests {
     }
 
     #[test]
-    fn test_toyota_car_should_return_mazda_make() {
+    fn test_toyota_car_should_return_toyota_make() {
         let toyota_car = Toyota::new();
         let make = get_make(&toyota_car);
         assert_eq!("Toyota", make);
