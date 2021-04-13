@@ -1,7 +1,7 @@
 from typing import List
 import re
 
-non_whitespace = re.compile("\S")
+_non_whitespace = re.compile("\S")
 
 
 class FileOperations:
@@ -20,7 +20,7 @@ class FileOperations:
 
     def _trim_all_lines(self):
         for index, line in enumerate(self._lines):
-            match_obj = re.search(non_whitespace, line)
+            match_obj = re.search(_non_whitespace, line)
             if match_obj is None:
                 # If match_obj is None, then the line has no non-whitespace character
                 self._lines[index] = self._handle_lines_with_only_whitespace(line)
