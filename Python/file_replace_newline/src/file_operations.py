@@ -26,7 +26,6 @@ class FileOperations:
                 self._lines[index] = self._handle_lines_with_only_whitespace(line)
             else:
                 self._lines[index] = self._handle_lines_with_characters(line)
-        print(self._lines)
 
     def _output_back_to_file(self):
         with open(self._file_path, "w") as file:
