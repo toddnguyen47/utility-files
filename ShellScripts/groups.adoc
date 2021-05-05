@@ -9,3 +9,13 @@ run the following commands:
 sudo groupadd --gid=57341 storage-disk
 sudo usermod -a -G storage-disk $USER
 ----
+
+After running the two commands above, log out then log back in. After, run the `id` command.
+You should see the group `57341(storage-disk)` in the output.
+
+[source, bash]
+----
+id | grep "57341(storage-disk)"
+----
+
+Then you're all set!
