@@ -1,0 +1,11 @@
+= Groups
+
+In order to access our `storage` documents, we will ensure that all users will be under the
+group `storage-disk` with the group ID (GID) of `57341`. In other words, in a Debian environment,
+run the following commands:
+
+[source, bash]
+----
+sudo groupadd --gid=57341 storage-disk
+sudo usermod -a -G storage-disk $USER
+----
