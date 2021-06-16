@@ -4,7 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [packages]
+pyyaml = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
+
+[pipenv]
+allow_prereleases = true

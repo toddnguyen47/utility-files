@@ -1,0 +1,2 @@
+windows_script: "script-to-run.bat"
+unix_script: "script-to-run.sh"
