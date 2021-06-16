@@ -1,2 +1,2 @@
-windows_script: "script-to-run.bat"
-unix_script: "script-to-run.sh"
+windows-script-full-path: "./script-to-run.bat"
+unix-script-full-path: "./script-to-run.sh"

@@ -4,11 +4,10 @@ from sys import platform
 from datetime import datetime as dt
 from datetime import timedelta
 import subprocess
-import os
 
 _CONFIG_YAML_FILE_PATH = "config.yaml"
-_KEY_WINDOWS_SCRIPT = "windows_script"
-_KEY_UNIX_SCRIPT = "unix_script"
+_KEY_WINDOWS_SCRIPT_FULL_PATH = "windows-script-full-path"
+_KEY_UNIX_SCRIPT_FULL_PATH = "unix-script-full-path"
 
 
 class ElapsedTime:
@@ -18,9 +17,9 @@ class ElapsedTime:
 
     def execute(self):
         if platform.lower() == "win32":
-            self._execute_timed(self._yaml_file[_KEY_WINDOWS_SCRIPT])
+            self._execute_timed(self._yaml_file[_KEY_WINDOWS_SCRIPT_FULL_PATH])
         else:
-            self._execute_timed(self._yaml_file[_KEY_UNIX_SCRIPT])
+            self._execute_timed(self._yaml_file[_KEY_UNIX_SCRIPT_FULL_PATH])
 
     # *****************************************************
     # PRIVATE FUNCTIONS
@@ -28,8 +27,7 @@ class ElapsedTime:
 
     def _execute_timed(self, script_to_run: str):
         start = dt.now()
-        full_path = os.path.join(os.getcwd(), script_to_run)
-        subprocess.run([full_path])
+        subprocess.run([script_to_run])
         end = dt.now()
         elapsed = end - start
         self._output_elapsed_time(elapsed)
