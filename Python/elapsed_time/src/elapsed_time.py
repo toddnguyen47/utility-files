@@ -4,8 +4,11 @@ from sys import platform
 from datetime import datetime as dt
 from datetime import timedelta
 import subprocess
+import os
 
-_CONFIG_YAML_FILE_PATH = "config.yaml"
+_CONFIG_YAML_FILE_PATH = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), "config.yaml"
+)
 _KEY_WINDOWS_SCRIPT_FULL_PATH = "windows-script-full-path"
 _KEY_UNIX_SCRIPT_FULL_PATH = "unix-script-full-path"
 
