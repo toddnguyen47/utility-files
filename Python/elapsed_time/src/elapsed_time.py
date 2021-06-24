@@ -1,22 +1,17 @@
-import yaml
+import read_in_yaml_config
 
 from sys import platform
 from datetime import datetime as dt
 from datetime import timedelta
 import subprocess
-import os
 
-_CONFIG_YAML_FILE_PATH = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "config.yaml"
-)
 _KEY_WINDOWS_SCRIPT_FULL_PATH = "windows-script-full-path"
 _KEY_UNIX_SCRIPT_FULL_PATH = "unix-script-full-path"
 
 
 class ElapsedTime:
     def __init__(self) -> None:
-        self._yaml_file = ""
-        self._read_yaml_file()
+        self._yaml_file = read_in_yaml_config.read()
 
     def execute(self):
         if platform.lower() == "win32":
@@ -44,10 +39,6 @@ class ElapsedTime:
                 hours, minutes, seconds, elapsed.microseconds
             )
         )
-
-    def _read_yaml_file(self):
-        with open(_CONFIG_YAML_FILE_PATH) as file:
-            self._yaml_file = yaml.safe_load(file)
 
 
 if __name__ == "__main__":
