@@ -3,10 +3,14 @@ import os
 
 _TMP_FILE = "tmp"
 _ENCODING = "utf-8"
+_SPACE_CHAR = " "
+_INDEX_GROUP_ONLY_TABS = 1
+_INDEX_GROUP_REMAINING_CHARACTERS = 2
 
 
 class ConvertBeginningTabs:
     def __init__(self) -> None:
+        # Import this pattern on https://regex101.com/ for detailed explanation
         self._pattern = re.compile(r"(^\t+)([\S\s]*)")
 
     def convert_on_files_with_ext(
@@ -40,10 +44,10 @@ class ConvertBeginningTabs:
         if matcher is None:
             return_str = input_line
         else:
-            tabs_str = matcher.group(1)
+            tabs_str = matcher.group(_INDEX_GROUP_ONLY_TABS)
             space_per_tab = self._generate_space(num_spaces)
             space_str = tabs_str.replace("\t", space_per_tab)
-            return_str = space_str + matcher.group(2)
+            return_str = space_str + matcher.group(_INDEX_GROUP_REMAINING_CHARACTERS)
 
         return return_str.rstrip()
 
@@ -53,13 +57,15 @@ class ConvertBeginningTabs:
 
     def _generate_space(self, num_spaces: int) -> str:
         list1 = []
-        space_str = ""
+        return_str_with_only_spaces = ""
         for _ in range(num_spaces):
-            list1.append(" ")
-        return space_str.join(list1)
+            list1.append(_SPACE_CHAR)
+        return return_str_with_only_spaces.join(list1)
 
     def _convert_file(self, full_path: str, num_spaces: int):
         print("Operating on '{}'".format(full_path.replace("\\", "/")))
+        # We need to open using binary and encode/decode appropriate to enforce that files need to be saved
+        # with Linux line endings
         with open(full_path, mode="rb") as input_file:
             with open(_TMP_FILE, mode="wb") as output_file:
                 for line in input_file:
