@@ -3,7 +3,6 @@ from convert_beginning_tabs import ConvertBeginningTabs
 
 import os
 
-from typing import NamedTuple
 from collections import namedtuple
 
 _CONFIG_YAML = "config.yaml"
