@@ -4,11 +4,17 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "run tests",
+      "label": "Run All Tests",
       "type": "shell",
       "command": "python3w",
       "args": ["-m", "pipenv", "run", "pytest", "tests"],
-      "problemMatcher": [],
+      "problemMatcher": []
     },
+    {
+      "label": "Windows: Generate Coverage Report",
+      "type": "shell",
+      "command": "generate_coverage_report.bat",
+      "problemMatcher": []
+    }
   ]
 }
