@@ -4,9 +4,24 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Run All Tests",
+      "label": "Windows: Run All Tests",
       "type": "shell",
       "command": "python3w",
+      "args": ["-m", "pipenv", "run", "pytest", "tests"],
+      "problemMatcher": [],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      }
+    },
+    {
+      "label": "Linux: Run All Tests",
+      "type": "shell",
+      "command": "python3",
       "args": ["-m", "pipenv", "run", "pytest", "tests"],
       "problemMatcher": [],
       "presentation": {
