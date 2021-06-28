@@ -45,7 +45,9 @@ class ConvertBeginningTabs:
             return_str = input_line
         else:
             tabs_str = matcher.group(_INDEX_GROUP_ONLY_SPACES_AND_TABS)
-            space_str = self._replace_tabs_with_respect_to_beginning_spaces(tabs_str, 4)
+            space_str = self._replace_tabs_with_respect_to_beginning_spaces(
+                tabs_str, num_spaces
+            )
             return_str = space_str + matcher.group(_INDEX_GROUP_REMAINING_CHARACTERS)
 
         return return_str.rstrip()
@@ -81,7 +83,8 @@ class ConvertBeginningTabs:
         self, tabs_str: str, num_spaces: int
     ) -> str:
         """Will replace tabs with respect to space in front of it.
-        For example, if the input string is " \t", and the tabsize is 4, then that tab should only be replaced
+        Let's use `s` for spaces and `t` for tabs.
+        For example, if the input string is `st`, and the tabsize is 4, then that tab should only be replaced
         by 3 tabs.
         """
         # space_per_tab = self._generate_space(num_spaces)
@@ -91,6 +94,9 @@ class ConvertBeginningTabs:
         for char in tabs_str:
             if char == " ":
                 num_preceding_spaces += 1
+                # Reset num_preceding_spaces if it ever exceeds the provided num_spaces
+                if num_preceding_spaces >= num_spaces:
+                    num_preceding_spaces = 0
                 output_str = output_str + char
             elif char == "\t":
                 num_spaces_to_use = num_spaces - num_preceding_spaces
