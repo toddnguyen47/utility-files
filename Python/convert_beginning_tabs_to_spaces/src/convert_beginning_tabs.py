@@ -4,14 +4,14 @@ import os
 _TMP_FILE = "tmp"
 _ENCODING = "utf-8"
 _SPACE_CHAR = " "
-_INDEX_GROUP_ONLY_TABS = 1
+_INDEX_GROUP_ONLY_SPACES_AND_TABS = 1
 _INDEX_GROUP_REMAINING_CHARACTERS = 2
 
 
 class ConvertBeginningTabs:
     def __init__(self) -> None:
         # Import this pattern on https://regex101.com/ for detailed explanation
-        self._pattern = re.compile(r"(^\t+)([\S\s]*)")
+        self._pattern = re.compile(r"(^[ \t]+)([\S\s]*)")
 
     def convert_on_files_with_ext(
         self, file_path: str, num_spaces: int, file_extension: str = ""
@@ -44,9 +44,8 @@ class ConvertBeginningTabs:
         if matcher is None:
             return_str = input_line
         else:
-            tabs_str = matcher.group(_INDEX_GROUP_ONLY_TABS)
-            space_per_tab = self._generate_space(num_spaces)
-            space_str = tabs_str.replace("\t", space_per_tab)
+            tabs_str = matcher.group(_INDEX_GROUP_ONLY_SPACES_AND_TABS)
+            space_str = self._replace_tabs_with_respect_to_beginning_spaces(tabs_str, 4)
             return_str = space_str + matcher.group(_INDEX_GROUP_REMAINING_CHARACTERS)
 
         return return_str.rstrip()
@@ -77,3 +76,27 @@ class ConvertBeginningTabs:
     def _overwrite_input_file(self, full_path: str):
         os.remove(full_path)
         os.rename(_TMP_FILE, full_path)
+
+    def _replace_tabs_with_respect_to_beginning_spaces(
+        self, tabs_str: str, num_spaces: int
+    ) -> str:
+        """Will replace tabs with respect to space in front of it.
+        For example, if the input string is " \t", and the tabsize is 4, then that tab should only be replaced
+        by 3 tabs.
+        """
+        # space_per_tab = self._generate_space(num_spaces)
+        # space_str = tabs_str.replace("\t", num_spaces)
+        num_preceding_spaces = 0
+        output_str = ""
+        for char in tabs_str:
+            if char == " ":
+                num_preceding_spaces += 1
+                output_str = output_str + char
+            elif char == "\t":
+                num_spaces_to_use = num_spaces - num_preceding_spaces
+                space_str = self._generate_space(num_spaces_to_use)
+                output_str = output_str + space_str
+                num_preceding_spaces = 0
+            else:
+                raise RuntimeError("Not a space or tab in `tabs_str`!")
+        return output_str
