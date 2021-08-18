@@ -14,6 +14,19 @@ Edited by me :D It doesn't calculate leap years or February's lower amount of da
 ^(0[1-9]|1[012])[- \/.](0[1-9]|[12][0-9]|3[01])[- \/.](\d{4})$
 ----
 
+== Fancier Date
+
+The RegEx has the following smarts:
+
+* On Jan, Mar, May, Jul, Aug, Oct, and Dec, check for 31 days
+* On Apr, Jun, Sep, and Nov, check for 30 days
+* On Feb, check for 29 days. No leap year calculation here!
+
+[source, regex]
+----
+^(((0[13578])|(1[02]))\/(0[1-9]|[12]\d|3[01])|(0[469]|1[1])\/(0[1-9]|2\d|3[0])|02\/(0[1-9]|1\d|2\d))\/(\d{4})$
+----
+
 == Monetary amount
 
 Ref: https://stackoverflow.com/a/354216
