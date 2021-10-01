@@ -116,30 +116,4 @@ function runTests() {
   const endTimeForIn = performance.now();
   console.log('Average time: ' + (endTimeForIn - startTimeForIn) + 'ms');
   console.log(newArr.length);
-
-  /*
-  Output with 5_000_000 elements, 30 times on Firefox 91.0:
-
-  Starting speed/execution test performance with arraySize iterations 5000000 index.js:22:11
-  arraySize 5000000 index.js:23:11
-  Times ran: 30 index.js:24:11
-  for loop index.js:31:11
-  Average time: 2.7333333333333334 ms index.js:41:11
-  0 30 index.js:42:11
-  while loop index.js:46:11
-  Average time: 3.533333333333333 ms index.js:58:11
-  0 30 index.js:59:11
-  do...while index.js:63:11
-  Average time: 3.7 ms index.js:76:11
-  0 30 index.js:77:11
-  for...of index.js:81:11
-  Average time: 31.533333333333335 ms index.js:91:11
-  0 30 index.js:92:11
-  for...each index.js:96:11
-  Average time: 24.566666666666666 ms index.js:106:11
-  0 30 index.js:107:11
-  for...in is the slowest by far. We'll only run this once index.js:110:11
-  Average time: 7802ms index.js:117:11
-  0
-  */
 }
