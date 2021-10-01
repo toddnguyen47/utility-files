@@ -1,0 +1,28 @@
+= For loop time trial
+
+Output with 5_000_000 elements, 30 times on Firefox 91.0:
+
+Starting speed/execution test performance with arraySize iterations 5000000
+
+arraySize 5000000
+
+Times ran: 30
+
+* for loop
+  ** Average time: 2.7333333333333334 ms
+  ** 0 30
+* while loop
+  ** Average time: 3.533333333333333 ms
+  ** 0 30
+* do...while
+  ** Average time: 3.7 ms
+  ** 0 30
+* for...of
+  ** Average time: 31.533333333333335 ms
+  ** 0 30
+* for...each
+  ** Average time: 24.566666666666666 ms
+  ** 0 30
+* for...in is the slowest by far. We'll only run this once
+  ** Average time: 7802ms
+  ** 0
