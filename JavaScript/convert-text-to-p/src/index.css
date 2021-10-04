@@ -1,0 +1,15 @@
+html {
+  font-size: 62.5%; /* 10 / 16 = 0.625 */
+}
+
+body {
+  font-size: 1.6em;
+}
+
+div#input-area textarea,
+div#output-area textarea {
+  display: block;
+  margin-bottom: 1em;
+  font-size: 1.2em;
+  font-family: monospace;
+}
