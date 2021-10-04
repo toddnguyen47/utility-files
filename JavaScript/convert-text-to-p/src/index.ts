@@ -26,11 +26,14 @@ class ConvertTextToParagraph {
 
 const inputButton = document.querySelector('button#input-button');
 const convertTextToParagraph = new ConvertTextToParagraph();
-inputButton?.addEventListener('click', (event) => {
+
+function handleInputButtonClick(event: Event) {
   convertTextToParagraph.handleClick(event);
-});
+}
+inputButton?.addEventListener('click', handleInputButtonClick);
 
 const outputTextArea = document.querySelector('textarea#output-text-area') as HTMLTextAreaElement;
-outputTextArea?.addEventListener('focus', (_event) => {
+function handleOutputTextAreaFocus(_event: Event) {
   outputTextArea.select();
-});
+}
+outputTextArea?.addEventListener('focus', handleOutputTextAreaFocus);
