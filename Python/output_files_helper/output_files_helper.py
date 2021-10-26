@@ -14,7 +14,7 @@ def write(filename: str, data: str):
     """Output to files"""
     with open(filename, "w", encoding="utf-8") as output_file:
         output_file.write(data)
-    _logger.info(f"Outputed to '{filename}'")
+    _logger.info(f"Outputted to '{filename}'")
 
 
 def write_prepend_datetime(filename: str, data: str):
