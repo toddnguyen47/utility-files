@@ -11,7 +11,7 @@ public final class GetTimeInUtc {
     /**
      * Sample output: 2021-11-03T22:52:57Z
      */
-    public static String getTimeInUtc() {
+    public static String getCurrentTimeInUtc() {
         final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
         final String pattern = "yyyy-MM-dd'T'HH:mm:ssX";
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
