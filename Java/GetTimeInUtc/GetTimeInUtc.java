@@ -10,6 +10,7 @@ public final class GetTimeInUtc {
 
     /**
      * Sample output: 2021-11-03T22:52:57Z
+     * Reference: https://stackoverflow.com/a/19632076/6323360
      */
     public static String getCurrentTimeInUtc() {
         final OffsetDateTime now = OffsetDateTime.now(ZoneOffset.UTC);
