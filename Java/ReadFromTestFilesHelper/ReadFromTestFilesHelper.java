@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -18,26 +18,25 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * </p>
  */
 public final class ReadFromTestFilesHelper {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     // Private constructor to prevent instantiation
     private ReadFromTestFilesHelper() {}
 
-    public static JsonNode readIntoJsonNode(final String filename)
+    public static JsonNode readIntoJsonNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        return OBJECT_MAPPER.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
+        return objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
                 JsonNode.class);
     }
 
-    public static ArrayNode readIntoArrayNode(final String filename)
+    public static ArrayNode readIntoArrayNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        return OBJECT_MAPPER.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
+        return objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
                 ArrayNode.class);
     }
 
-    public static ObjectNode readIntoObjectNode(final String filename)
+    public static ObjectNode readIntoObjectNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        return OBJECT_MAPPER.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
+        return objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
                 ObjectNode.class);
     }
 
