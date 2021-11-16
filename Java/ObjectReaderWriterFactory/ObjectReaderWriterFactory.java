@@ -10,10 +10,29 @@ public final class ObjectReaderWriterFactory {
 
     private ObjectReaderWriterFactory() {}
 
+    /**
+     * Create ObjectReader for the `JsonNode` class
+     *
+     * @return
+     */
     public static ObjectReader createObjectReader() {
         return OBJECT_MAPPER.readerFor(JsonNode.class);
     }
 
+    /**
+     * Create ObjectReader for a specific class
+     *
+     * @return
+     */
+    public static ObjectReader createObjectReader(Class<?> clazz) {
+        return OBJECT_MAPPER.readerFor(clazz);
+    }
+
+    /**
+     * Create a default ObjectWriter
+     *
+     * @return
+     */
     public static ObjectWriter createObjectWriter() {
         return OBJECT_MAPPER.writer();
     }
