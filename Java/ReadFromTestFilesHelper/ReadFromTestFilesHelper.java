@@ -29,6 +29,9 @@ public final class ReadFromTestFilesHelper {
         JsonNode jsonNode = objectReader.createObjectNode();
         try {
             final URL url = getUrlOfFilename(filename);
+            if (url == null) {
+                throw new IllegalArgumentException();
+            }
             jsonNode = objectReader.readValue(url, JsonNode.class);
         } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
@@ -42,6 +45,9 @@ public final class ReadFromTestFilesHelper {
         ArrayNode arrayNode = (ArrayNode) objectReader.createArrayNode();
         try {
             final URL url = getUrlOfFilename(filename);
+            if (url == null) {
+                throw new IllegalArgumentException();
+            }
             arrayNode = objectReader.readValue(url, ArrayNode.class);
         } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
@@ -55,6 +61,9 @@ public final class ReadFromTestFilesHelper {
         ObjectNode objectNode = (ObjectNode) objectReader.createObjectNode();
         try {
             final URL url = getUrlOfFilename(filename);
+            if (url == null) {
+                throw new IllegalArgumentException();
+            }
             objectNode = objectReader.readValue(url, ObjectNode.class);
         } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
@@ -67,6 +76,9 @@ public final class ReadFromTestFilesHelper {
         String string = "";
         try {
             final URL url = getUrlOfFilename(filename);
+            if (url == null) {
+                throw new IllegalArgumentException();
+            }
             final Path path = Paths.get(url.getFile());
             string = new String(Files.readAllBytes(path));
         } catch (final IllegalArgumentException exception) {
