@@ -1,7 +1,9 @@
 package testutils;
 
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -26,9 +28,9 @@ public final class ReadFromTestFilesHelper {
             throws JsonParseException, JsonMappingException, IOException {
         JsonNode jsonNode = objectReader.createObjectNode();
         try {
-            jsonNode = objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
-                    JsonNode.class);
-        } catch (IllegalArgumentException exception) {
+            final URL url = getUrlOfFilename(filename);
+            jsonNode = objectReader.readValue(url, JsonNode.class);
+        } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
             throw exception;
         }
@@ -39,9 +41,9 @@ public final class ReadFromTestFilesHelper {
             throws JsonParseException, JsonMappingException, IOException {
         ArrayNode arrayNode = (ArrayNode) objectReader.createArrayNode();
         try {
-            arrayNode = objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
-                    ArrayNode.class);
-        } catch (IllegalArgumentException exception) {
+            final URL url = getUrlOfFilename(filename);
+            arrayNode = objectReader.readValue(url, ArrayNode.class);
+        } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
             throw exception;
         }
@@ -52,9 +54,9 @@ public final class ReadFromTestFilesHelper {
             throws JsonParseException, JsonMappingException, IOException {
         ObjectNode objectNode = (ObjectNode) objectReader.createObjectNode();
         try {
-            objectNode = objectReader.readValue(Thread.currentThread().getContextClassLoader().getResource(filename),
-                    ObjectNode.class);
-        } catch (IllegalArgumentException exception) {
+            final URL url = getUrlOfFilename(filename);
+            objectNode = objectReader.readValue(url, ObjectNode.class);
+        } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
             throw exception;
         }
@@ -64,12 +66,17 @@ public final class ReadFromTestFilesHelper {
     public static String readFileAsString(final String filename) throws IOException {
         String string = "";
         try {
-            string = new String(Files.readAllBytes(
-                    Paths.get(Thread.currentThread().getContextClassLoader().getResource(filename).getFile())));
-        } catch (IllegalArgumentException exception) {
+            final URL url = getUrlOfFilename(filename);
+            final Path path = Paths.get(url.getFile());
+            string = new String(Files.readAllBytes(path));
+        } catch (final IllegalArgumentException exception) {
             System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
             throw exception;
         }
         return string;
+    }
+
+    private static URL getUrlOfFilename(final String filename) {
+        return Thread.currentThread().getContextClassLoader().getResource(filename);
     }
 }
