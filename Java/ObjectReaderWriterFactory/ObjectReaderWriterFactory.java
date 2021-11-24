@@ -38,7 +38,14 @@ public final class ObjectReaderWriterFactory {
         return OBJECT_MAPPER.writer();
     }
 
+    /**
+     * Get a <code>JsonNodeFactory</code> that can be used to create <code>ArrayNode</code> and
+     * <code>ObjectNode</code>
+     *
+     * @return
+     */
     public static JsonNodeFactory getNodeFactory() {
         return OBJECT_MAPPER.getNodeFactory();
     }
 }
+
