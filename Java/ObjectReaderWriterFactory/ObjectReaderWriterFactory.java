@@ -1,9 +1,10 @@
-package com.util;
+package com.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 public final class ObjectReaderWriterFactory {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -35,5 +36,9 @@ public final class ObjectReaderWriterFactory {
      */
     public static ObjectWriter createObjectWriter() {
         return OBJECT_MAPPER.writer();
+    }
+
+    public static JsonNodeFactory getNodeFactory() {
+        return OBJECT_MAPPER.getNodeFactory();
     }
 }

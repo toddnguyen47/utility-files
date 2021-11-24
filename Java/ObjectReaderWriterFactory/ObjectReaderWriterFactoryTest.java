@@ -1,4 +1,4 @@
-package com.util;
+package com.utils;
 
 import java.util.Map;
 import org.junit.Assert;
@@ -35,5 +35,13 @@ public class ObjectReaderWriterFactoryTest {
         final ObjectWriter objectWriter = ObjectReaderWriterFactory.createObjectWriter();
 
         Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter", objectWriter.getClass().toString());
+    }
+
+    @Test
+    public void test_GivenValidJsonNodeFactory_WhenGettingJsonNodeFactory_ThenInstanceIsOfJsonNodeFactoryClass() {
+        final JsonNodeFactory jsonNodeFactory = ObjectReaderWriterFactory.getNodeFactory();
+
+        Assert.assertEquals("class com.fasterxml.jackson.databind.node.JsonNodeFactory",
+                jsonNodeFactory.getClass().toString());
     }
 }
