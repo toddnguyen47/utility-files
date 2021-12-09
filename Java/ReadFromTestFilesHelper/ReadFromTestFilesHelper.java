@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * <p>
- * Note that the "root" folder to look for resource files are in <code>src/test/resources</code>
+ * Note that the "root" folder to look for resource files are in {@code src/test/resources}
  * </p>
  */
 public final class ReadFromTestFilesHelper {
