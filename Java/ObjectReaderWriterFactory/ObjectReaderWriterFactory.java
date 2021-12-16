@@ -1,5 +1,6 @@
 package com.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -25,8 +26,17 @@ public final class ObjectReaderWriterFactory {
      *
      * @return
      */
-    public static ObjectReader createObjectReader(Class<?> clazz) {
+    public static ObjectReader createObjectReader(final Class<?> clazz) {
         return OBJECT_MAPPER.readerFor(clazz);
+    }
+
+    /**
+     * Create ObjectReader for a specific TypeReference
+     *
+     * @return
+     */
+    public static ObjectReader createObjectReader(final TypeReference<?> type) {
+        return OBJECT_MAPPER.readerFor(type);
     }
 
     /**
@@ -48,4 +58,3 @@ public final class ObjectReaderWriterFactory {
         return OBJECT_MAPPER.getNodeFactory();
     }
 }
-
