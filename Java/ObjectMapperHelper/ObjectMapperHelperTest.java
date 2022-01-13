@@ -1,5 +1,6 @@
 package com.utils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -10,11 +11,11 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ObjectReaderWriterFactoryTest {
+public class ObjectMapperHelperTest {
     @Test
     public void test_GivenObjectReaderCreated_WhenCallingFactoryMethod_ThenInstanceIsOfObjectReaderClass()
             throws Exception {
-        final ObjectReader objectReader = ObjectReaderWriterFactory.createObjectReader();
+        final ObjectReader objectReader = ObjectMapperHelper.createObjectReader();
 
         final JsonNode jsonNode = objectReader.readValue("{}");
 
@@ -25,7 +26,7 @@ public class ObjectReaderWriterFactoryTest {
     @Test
     public void test_GivenObjectReaderCreatedWithClass_WhenCallingFactoryMethod_ThenInstanceIsOfObjectReaderClass()
             throws Exception {
-        final ObjectReader objectReader = ObjectReaderWriterFactory.createObjectReader(Map.class);
+        final ObjectReader objectReader = ObjectMapperHelper.createObjectReader(Map.class);
 
         final Map<String, Object> jsonNode = objectReader.readValue("{}");
 
@@ -36,7 +37,7 @@ public class ObjectReaderWriterFactoryTest {
     @Test
     public void test_GivenObjectReaderCreatedWithTypeReference_WhenCallingFactoryMethod_ThenInstanceIsOfObjectReaderClass()
             throws Exception {
-        final ObjectReader objectReader = ObjectReaderWriterFactory.createObjectReader(
+        final ObjectReader objectReader = ObjectMapperHelper.createObjectReader(
             new TypeReference<List<Integer>>() {}
         );
 
@@ -50,16 +51,28 @@ public class ObjectReaderWriterFactoryTest {
 
     @Test
     public void test_GivenObjectWriterCreated_WhenCallingFactoryMethod_ThenInstanceIsOfObjectWriterClass() {
-        final ObjectWriter objectWriter = ObjectReaderWriterFactory.createObjectWriter();
+        final ObjectWriter objectWriter = ObjectMapperHelper.createObjectWriter();
 
         Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter", objectWriter.getClass().toString());
     }
 
     @Test
     public void test_GivenValidJsonNodeFactory_WhenGettingJsonNodeFactory_ThenInstanceIsOfJsonNodeFactoryClass() {
-        final JsonNodeFactory jsonNodeFactory = ObjectReaderWriterFactory.getNodeFactory();
+        final JsonNodeFactory jsonNodeFactory = ObjectMapperHelper.getNodeFactory();
 
         Assert.assertEquals("class com.fasterxml.jackson.databind.node.JsonNodeFactory",
                 jsonNodeFactory.getClass().toString());
+    }
+
+    @Test
+    public void test_GivenMap_WhenConvertingToJsonNode_ThenJsonNodeIsCorrect() {
+        final Map<String, String> map1 = new HashMap<>();
+        map1.put("Hello", "World");
+        map1.put("Meaning of Life", "42");
+
+        final JsonNode actualJsonNode = ObjectMapperHelper.convertObjectToJsonNode(map1);
+
+        final String expectedStr = "{\"Hello\":\"World\",\"Meaning of Life\":\"42\"}";
+        Assert.assertEquals(expectedStr, actualJsonNode.toString());
     }
 }

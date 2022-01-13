@@ -7,10 +7,10 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
-public final class ObjectReaderWriterFactory {
+public final class ObjectMapperHelper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private ObjectReaderWriterFactory() {}
+    private ObjectMapperHelper() {}
 
     /**
      * Create ObjectReader for the `JsonNode` class
@@ -56,5 +56,9 @@ public final class ObjectReaderWriterFactory {
      */
     public static JsonNodeFactory getNodeFactory() {
         return OBJECT_MAPPER.getNodeFactory();
+    }
+
+    public static JsonNode convertObjectToJsonNode(final Object object) {
+        return OBJECT_MAPPER.valueToTree(object);
     }
 }
