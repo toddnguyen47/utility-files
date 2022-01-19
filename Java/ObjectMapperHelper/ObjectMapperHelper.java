@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 /**
- * Helper class to create `ObjectReader`, `ObjectWriter`, and `JsonNodeFactory`. Also expose some
- * functions of `ObjectMapper`. This is because according to `fasterxml`'s documentation,
+ * <div> Helper class to create `ObjectReader`, `ObjectWriter`, and `JsonNodeFactory`. Also expose
+ * some functions of `ObjectMapper`. This is because according to `fasterxml`'s documentation,
  * `ObjectMapper`s are often very heavy; thus, lightweight instances of `ObjectReader` and
- * `ObjectWriter` should be used instead.
+ * `ObjectWriter` should be used instead. </div>
  * 
  * <div> Code Examples:
  * 
