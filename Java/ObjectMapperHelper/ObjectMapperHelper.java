@@ -7,6 +7,29 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
+/**
+ * Helper class to create `ObjectReader`, `ObjectWriter`, and `JsonNodeFactory`. Also expose some
+ * functions of `ObjectMapper`. This is because according to `fasterxml`'s documentation,
+ * `ObjectMapper`s are often very heavy; thus, lightweight instances of `ObjectReader` and
+ * `ObjectWriter` should be used instead.
+ * 
+ * <div> Code Examples:
+ * 
+ * <pre>
+ * // To read a value
+ * final ObjectReader objectReader = ObjectMapperHelper.createObjectReader();
+ * final JsonNode jsonNode = objectReader.readValue({inputString});
+ * 
+ * // To write a POJO as a String
+ * final ObjectWriter objectWriter = ObjectMapperHelper.createObjectWriter();
+ * final String str1 = objectWriter.writeValueAsString({inputJsonSerializableObject});
+ * 
+ * // To convert object to JsonNode
+ * final JsonNode jsonNode = ObjectMapperHelper.convertObjectToJsonNode({inputObject});
+ * </pre>
+ * 
+ * </div>
+ */
 public final class ObjectMapperHelper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
