@@ -20,6 +20,10 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
  * final ObjectReader objectReader = ObjectMapperHelper.createObjectReader();
  * final JsonNode jsonNode = objectReader.readValue({inputString});
  * 
+ * // To read into a List<String>
+ * final ObjectReader objectReaderList = ObjectMapperHelper.createObjectReader(new TypeReference<List<String>>(){});
+ * final List<String> list1 = objectReaderList.readValue({inputString});
+ * 
  * // To write a POJO as a String
  * final ObjectWriter objectWriter = ObjectMapperHelper.createObjectWriter();
  * final String str1 = objectWriter.writeValueAsString({inputJsonSerializableObject});
