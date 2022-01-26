@@ -22,54 +22,26 @@ public final class ReadFromTestFilesHelper {
     private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
 
     // Private constructor to prevent instantiation
-    private ReadFromTestFilesHelper() {}
+    private ReadFromTestFilesHelper() {
+    }
 
     public static JsonNode readIntoJsonNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        JsonNode jsonNode = objectReader.createObjectNode();
-        try {
-            final URL url = getUrlOfFilename(filename);
-            if (url == null) {
-                throw new IllegalArgumentException();
-            }
-            jsonNode = objectReader.readValue(url, JsonNode.class);
-        } catch (final IllegalArgumentException exception) {
-            System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
-            throw exception;
-        }
+        final String str = readFileAsString(filename);
+        final JsonNode jsonNode = objectReader.readTree(str);
         return jsonNode;
     }
 
     public static ArrayNode readIntoArrayNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        ArrayNode arrayNode = (ArrayNode) objectReader.createArrayNode();
-        try {
-            final URL url = getUrlOfFilename(filename);
-            if (url == null) {
-                throw new IllegalArgumentException();
-            }
-            arrayNode = objectReader.readValue(url, ArrayNode.class);
-        } catch (final IllegalArgumentException exception) {
-            System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
-            throw exception;
-        }
-        return arrayNode;
+        final JsonNode jsonNode = readIntoJsonNode(objectReader, filename);
+        return (ArrayNode) jsonNode;
     }
 
     public static ObjectNode readIntoObjectNode(final ObjectReader objectReader, final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        ObjectNode objectNode = (ObjectNode) objectReader.createObjectNode();
-        try {
-            final URL url = getUrlOfFilename(filename);
-            if (url == null) {
-                throw new IllegalArgumentException();
-            }
-            objectNode = objectReader.readValue(url, ObjectNode.class);
-        } catch (final IllegalArgumentException exception) {
-            System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
-            throw exception;
-        }
-        return objectNode;
+        final JsonNode jsonNode = readIntoJsonNode(objectReader, filename);
+        return (ObjectNode) jsonNode;
     }
 
     public static String readFileAsString(final String filename) throws IOException {
