@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class ObjectMapperHelperTest {
+
     @Test
     public void test_GivenObjectReaderCreated_WhenCallingFactoryMethod_ThenInstanceIsOfObjectReaderClass()
             throws Exception {
@@ -19,7 +20,8 @@ public class ObjectMapperHelperTest {
 
         final JsonNode jsonNode = objectReader.readValue("{}");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
+                objectReader.getClass().toString());
         Assert.assertNotNull(jsonNode);
     }
 
@@ -30,20 +32,21 @@ public class ObjectMapperHelperTest {
 
         final Map<String, Object> jsonNode = objectReader.readValue("{}");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
+                objectReader.getClass().toString());
         Assert.assertNotNull(jsonNode);
     }
 
     @Test
     public void test_GivenObjectReaderCreatedWithTypeReference_WhenCallingFactoryMethod_ThenInstanceIsOfObjectReaderClass()
             throws Exception {
-        final ObjectReader objectReader = ObjectMapperHelper.createObjectReader(
-            new TypeReference<List<Integer>>() {}
-        );
+        final ObjectReader objectReader = ObjectMapperHelper.createObjectReader(new TypeReference<List<Integer>>() {
+        });
 
         final List<Integer> list1 = objectReader.readValue("[2, 5]");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
+                objectReader.getClass().toString());
         Assert.assertNotNull(list1);
         Assert.assertEquals(Integer.valueOf(2), list1.get(0));
         Assert.assertEquals(Integer.valueOf(5), list1.get(1));
@@ -53,7 +56,8 @@ public class ObjectMapperHelperTest {
     public void test_GivenObjectWriterCreated_WhenCallingFactoryMethod_ThenInstanceIsOfObjectWriterClass() {
         final ObjectWriter objectWriter = ObjectMapperHelper.createObjectWriter();
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter", objectWriter.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter",
+                objectWriter.getClass().toString());
     }
 
     @Test
@@ -70,7 +74,7 @@ public class ObjectMapperHelperTest {
         map1.put("Hello", "World");
         map1.put("Meaning of Life", "42");
 
-        final JsonNode actualJsonNode = ObjectMapperHelper.convertObjectToJsonNode(map1);
+        final JsonNode actualJsonNode = ObjectMapperHelper.valueToTree(map1);
 
         final String expectedStr = "{\"Hello\":\"World\",\"Meaning of Life\":\"42\"}";
         Assert.assertEquals(expectedStr, actualJsonNode.toString());

@@ -37,7 +37,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 public final class ObjectMapperHelper {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private ObjectMapperHelper() {}
+    private ObjectMapperHelper() {
+    }
 
     /**
      * Create ObjectReader for the `JsonNode` class
@@ -85,7 +86,13 @@ public final class ObjectMapperHelper {
         return OBJECT_MAPPER.getNodeFactory();
     }
 
-    public static JsonNode convertObjectToJsonNode(final Object object) {
+    /**
+     * See {@link ObjectMapper#valueToTree(Object)}
+     *
+     * @param object
+     * @return
+     */
+    public static JsonNode valueToTree(final Object object) {
         return OBJECT_MAPPER.valueToTree(object);
     }
 }
