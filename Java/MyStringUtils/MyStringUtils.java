@@ -1,6 +1,4 @@
-package com.aeg.schedule.schedule.event.util;
-
-import org.apache.commons.lang3.StringUtils;
+package mystringutils;
 
 public final class MyStringUtils {
 
@@ -10,9 +8,9 @@ public final class MyStringUtils {
 	}
 
 	/**
-	 * Remove all whitespace, then return abbreviated string
+	 * <div>Remove all whitespace, then return abbreviated string</div>
 	 *
-	 * Ref: https://stackoverflow.com/a/5455809/6323360
+	 * <div>Ref: https://stackoverflow.com/a/5455809/6323360</div>
 	 *
 	 * @param str
 	 * @return
