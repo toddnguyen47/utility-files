@@ -1,4 +1,4 @@
-package com.aeg.schedule.schedule.event.util;
+package mystringutils;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
