@@ -1,8 +1,10 @@
 package mystringutils;
 
+import org.apache.commons.lang3.StringUtils;
+
 public final class MyStringUtils {
 
-    private static final int DEFAULT_MAX_WIDTH = 500;
+    public static final int DEFAULT_MAX_WIDTH = 500;
 
     private MyStringUtils() {
     }
