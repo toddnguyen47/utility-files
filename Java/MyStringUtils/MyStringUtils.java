@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 public final class MyStringUtils {
 
     public static final int DEFAULT_MAX_WIDTH = 500;
+    private static final int MIN_WIDTH = 4;
 
     private MyStringUtils() {
     }
@@ -27,6 +28,7 @@ public final class MyStringUtils {
             return str;
         }
         final String strNoWhitespace = str.replaceAll("\\s", "");
-        return StringUtils.abbreviate(strNoWhitespace, maxWidth);
+        final int widthUsed = Math.max(maxWidth, MIN_WIDTH);
+        return StringUtils.abbreviate(strNoWhitespace, widthUsed);
     }
 }
