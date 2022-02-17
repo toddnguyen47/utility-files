@@ -1,0 +1,15 @@
+---
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+        args: ['--fix', 'lf']
+      - id: check-json
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: check-merge-conflict
+      - id: check-symlinks
