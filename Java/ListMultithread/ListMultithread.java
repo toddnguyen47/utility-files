@@ -58,7 +58,7 @@ public class ListMultithread {
         final List<Future<?>> futures = new ArrayList<Future<?>>(listSize);
         int startIndex = 0;
         for (int i = 0; i < NUM_THREADS; i++) {
-            final int itemCount = i < threadIndicesWithMaxItems ? minItemsPerThread : maxItemsPerThread;
+            final int itemCount = i < threadIndicesWithMaxItems ? maxItemsPerThread : minItemsPerThread;
             final int endIndex = startIndex + itemCount;
             final List<?> subList = Collections.synchronizedList(inputList.subList(startIndex, endIndex));
             futures.add(exec.submit(() -> {
