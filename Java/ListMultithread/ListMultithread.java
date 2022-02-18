@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.locks.ReentrantLock;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,14 +16,18 @@ public class ListMultithread {
 
     private static final int NUM_THREADS = 4;
     private static final Logger LOGGER = LogManager.getLogger(ListMultithread.class);
+    private static final ReentrantLock LOCK = new ReentrantLock();
 
-    public static void main(String[] args) {
+    private int currentProgress = 0; // NOPMD
+    private int listSize = 1;
+
+    public static void main(final String[] args) {
         final ListMultithread lm = new ListMultithread();
         lm.execute();
     }
 
     public void execute() {
-        final int listSize = 14;
+        listSize = 23;
         final List<String> newList = new ArrayList<>();
         final Random random = new Random();
         final int maxInt = 100;
@@ -36,6 +41,16 @@ public class ListMultithread {
         }
 
         LOGGER.info("ALL DONE!");
+    }
+
+    public static String getProgressString(final int current, final int maxProgress) {
+        // GUARD
+        if (maxProgress <= 0) {
+            return "MAX PROGRESS IS ZERO";
+        }
+
+        final double percentage = (current / (double) maxProgress) * 100.0;
+        return String.format("PROCESSING: %d/%d, %.2f%%", current, maxProgress, percentage);
     }
 
     /**
@@ -55,7 +70,7 @@ public class ListMultithread {
         final int minItemsPerThread = listSize / NUM_THREADS;
         final int maxItemsPerThread = minItemsPerThread + 1;
         final int threadIndicesWithMaxItems = listSize - (minItemsPerThread * NUM_THREADS);
-        final List<Future<?>> futures = new ArrayList<Future<?>>(listSize);
+        final List<Future<?>> futures = new ArrayList<>(listSize);
         int startIndex = 0;
         for (int i = 0; i < NUM_THREADS; i++) {
             final int itemCount = i < threadIndicesWithMaxItems ? maxItemsPerThread : minItemsPerThread;
@@ -82,18 +97,36 @@ public class ListMultithread {
      */
     private void runPerList(final List<?> inputList) {
         LOGGER.info(String.format("List size: %d", inputList.size()));
-        final Random random = new Random();
 
         for (int i = 0; i < inputList.size(); i++) {
-            try {
-                final double extraSeconds = random.nextDouble();
-                final int sleepMillis = 1000 + ((int) (extraSeconds * 1000));
-                LOGGER.info(String.format("Sleep for %s milliseconds", sleepMillis));
-                Thread.sleep(sleepMillis);
-            } catch (InterruptedException e) {
-                LOGGER.error("Exception on sleep!");
-            }
+            sleepAndLog();
+            // Locking our lock. This should be the last statement ran.
+            lockAndIncrementProgress();
+        }
+    }
+
+    private void sleepAndLog() {
+        final Random random = new Random();
+        try {
+            final double extraSeconds = random.nextDouble();
+            final int sleepMillis = 1000 + ((int) (extraSeconds * 1000));
+            LOGGER.info(String.format("Sleep for %s milliseconds", sleepMillis));
+            Thread.sleep(sleepMillis);
+        } catch (final InterruptedException e) {
+            LOGGER.error("Exception on sleep!");
         }
         LOGGER.info("Sleep done!");
+    }
+
+    private void lockAndIncrementProgress() {
+        LOCK.lock();
+        try {
+            // CRITICAL SECTION
+            // Try to minimize code here!
+            currentProgress += 1;
+            LOGGER.info(getProgressString(currentProgress, listSize));
+        } finally {
+            LOCK.unlock();
+        }
     }
 }
