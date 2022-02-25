@@ -95,4 +95,8 @@ public final class ObjectMapperHelper {
     public static JsonNode valueToTree(final Object object) {
         return OBJECT_MAPPER.valueToTree(object);
     }
+
+    public static ObjectMapper getObjectMapper() {
+        return OBJECT_MAPPER;
+    }
 }
