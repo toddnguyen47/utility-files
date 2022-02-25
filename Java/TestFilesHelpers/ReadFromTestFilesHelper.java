@@ -17,34 +17,35 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * Note that the "root" folder to look for resource files are in {@code src/test/resources}
  * </p>
  */
-public final class ReadFromTestFilesHelper {
+public class ReadFromTestFilesHelper {
 
     private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
+    private final ObjectReader objectReader;
 
-    // Private constructor to prevent instantiation
-    private ReadFromTestFilesHelper() {
+    public ReadFromTestFilesHelper(final ObjectReader objectReader) {
+        this.objectReader = objectReader;
     }
 
-    public static JsonNode readIntoJsonNode(final ObjectReader objectReader, final String filename)
+    public JsonNode readIntoJsonNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
         final String str = readFileAsString(filename);
-        final JsonNode jsonNode = objectReader.readTree(str);
+        final JsonNode jsonNode = objectReader.readValue(str);
         return jsonNode;
     }
 
-    public static ArrayNode readIntoArrayNode(final ObjectReader objectReader, final String filename)
+    public ArrayNode readIntoArrayNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        final JsonNode jsonNode = readIntoJsonNode(objectReader, filename);
+        final JsonNode jsonNode = readIntoJsonNode(filename);
         return (ArrayNode) jsonNode;
     }
 
-    public static ObjectNode readIntoObjectNode(final ObjectReader objectReader, final String filename)
+    public ObjectNode readIntoObjectNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
-        final JsonNode jsonNode = readIntoJsonNode(objectReader, filename);
+        final JsonNode jsonNode = readIntoJsonNode(filename);
         return (ObjectNode) jsonNode;
     }
 
-    public static String readFileAsString(final String filename) throws IOException {
+    public String readFileAsString(final String filename) throws IOException {
         String string = "";
         try {
             final URL url = getUrlOfFilename(filename);
@@ -60,7 +61,7 @@ public final class ReadFromTestFilesHelper {
         return string;
     }
 
-    private static URL getUrlOfFilename(final String filename) {
+    private URL getUrlOfFilename(final String filename) {
         return Thread.currentThread().getContextClassLoader().getResource(filename);
     }
 }
