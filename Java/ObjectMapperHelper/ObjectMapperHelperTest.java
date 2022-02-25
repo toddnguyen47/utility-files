@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -20,8 +21,7 @@ public class ObjectMapperHelperTest {
 
         final JsonNode jsonNode = objectReader.readValue("{}");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
-                objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
         Assert.assertNotNull(jsonNode);
     }
 
@@ -32,8 +32,7 @@ public class ObjectMapperHelperTest {
 
         final Map<String, Object> jsonNode = objectReader.readValue("{}");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
-                objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
         Assert.assertNotNull(jsonNode);
     }
 
@@ -45,8 +44,7 @@ public class ObjectMapperHelperTest {
 
         final List<Integer> list1 = objectReader.readValue("[2, 5]");
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader",
-                objectReader.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectReader", objectReader.getClass().toString());
         Assert.assertNotNull(list1);
         Assert.assertEquals(Integer.valueOf(2), list1.get(0));
         Assert.assertEquals(Integer.valueOf(5), list1.get(1));
@@ -56,8 +54,7 @@ public class ObjectMapperHelperTest {
     public void test_GivenObjectWriterCreated_WhenCallingFactoryMethod_ThenInstanceIsOfObjectWriterClass() {
         final ObjectWriter objectWriter = ObjectMapperHelper.createObjectWriter();
 
-        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter",
-                objectWriter.getClass().toString());
+        Assert.assertEquals("class com.fasterxml.jackson.databind.ObjectWriter", objectWriter.getClass().toString());
     }
 
     @Test
@@ -78,5 +75,12 @@ public class ObjectMapperHelperTest {
 
         final String expectedStr = "{\"Hello\":\"World\",\"Meaning of Life\":\"42\"}";
         Assert.assertEquals(expectedStr, actualJsonNode.toString());
+    }
+
+    @Test
+    public void test_GivenGetObjectMapper_ThenReturnCorrectMapper() {
+        final ObjectMapper objectMapper = ObjectMapperHelper.getObjectMapper();
+
+        Assert.assertEquals(ObjectMapper.class, objectMapper.getClass());
     }
 }
