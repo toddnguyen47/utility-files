@@ -1,6 +1,5 @@
 package com.objectmapperhelper;
 
-import com.att.eg.schedule.event.config.ObjectMapperConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
