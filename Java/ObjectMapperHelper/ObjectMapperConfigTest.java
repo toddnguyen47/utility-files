@@ -1,23 +1,31 @@
 package com.objectmapperhelper;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ObjectMapperConfigTest {
 
-	private ObjectMapperConfig objectMapperConfig;
+    private ObjectMapperConfig objectMapperConfig;
 
-	@Before
-	public void setUp() {
-		this.objectMapperConfig = new ObjectMapperConfig();
-	}
+    @Before
+    public void setUp() {
+        this.objectMapperConfig = new ObjectMapperConfig();
+    }
 
-	@Test
-	public void testObjectMapperCreation() {
-		final ObjectMapper objectMapper = objectMapperConfig.createObjectMapper();
+    @Test
+    public void testObjectMapperCreation() {
+        final com.fasterxml.jackson.databind.ObjectMapper objectMapper = objectMapperConfig.createObjectMapper();
 
-		Assert.assertEquals(ObjectMapper.class, objectMapper.getClass());
-	}
+        Assert.assertEquals(com.fasterxml.jackson.databind.ObjectMapper.class, objectMapper.getClass());
+    }
+
+    @Test
+    public void testCouchbaseObjectMapperCreation() {
+        final com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper objectMapper =
+                objectMapperConfig.createCouchbaseObjectMapper();
+
+        Assert.assertEquals(com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper.class,
+                objectMapper.getClass());
+    }
 }
