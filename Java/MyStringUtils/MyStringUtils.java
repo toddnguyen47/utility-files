@@ -30,7 +30,7 @@ public final class MyStringUtils {
 		if (StringUtils.isBlank(str)) {
 			return str;
 		}
-		final String strNoWhitespace = str.replaceAll("\\s", "");
+		final String strNoWhitespace = removeAllWhitespace(str);
 		final int widthUsed = Math.max(maxWidth, MIN_WIDTH);
 		return StringUtils.abbreviate(strNoWhitespace, widthUsed);
 	}
