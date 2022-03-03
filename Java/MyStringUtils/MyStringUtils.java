@@ -1,11 +1,13 @@
 package mystringutils;
 
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 public final class MyStringUtils {
 
     public static final int DEFAULT_MAX_WIDTH = 500;
     private static final int MIN_WIDTH = 4;
+    public static final Pattern WHITESPACE_PATTERN = Pattern.compile("\\s+");
 
     private MyStringUtils() {
     }
@@ -30,5 +32,19 @@ public final class MyStringUtils {
         final String strNoWhitespace = str.replaceAll("\\s", "");
         final int widthUsed = Math.max(maxWidth, MIN_WIDTH);
         return StringUtils.abbreviate(strNoWhitespace, widthUsed);
+    }
+
+    public static String removeAllWhitespace(final String input) {
+        return replaceWhitespace(input, "");
+    }
+
+    public static String replaceWhitespace(final String input, final String replacement) {
+        final String output;
+        if (StringUtils.isBlank(input)) {
+            output = "";
+        } else {
+            output = WHITESPACE_PATTERN.matcher(input).replaceAll(replacement);
+        }
+        return output;
     }
 }
