@@ -19,13 +19,4 @@ public class ObjectMapperConfigTest {
 
         Assert.assertEquals(com.fasterxml.jackson.databind.ObjectMapper.class, objectMapper.getClass());
     }
-
-    @Test
-    public void testCouchbaseObjectMapperCreation() {
-        final com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper objectMapper =
-                objectMapperConfig.createCouchbaseObjectMapper();
-
-        Assert.assertEquals(com.couchbase.client.deps.com.fasterxml.jackson.databind.ObjectMapper.class,
-                objectMapper.getClass());
-    }
 }
