@@ -1,2 +1,2 @@
 @REM https://stackoverflow.com/a/49403242
-call "Z:/Program Files (x86)/Notepad++/notepad++.exe" -multiInst -notabbar -nosession -noPlugin %*
+call "Z:/Program Files/Notepad++/notepad++.exe" -multiInst -notabbar -nosession -noPlugin %*
