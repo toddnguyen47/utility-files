@@ -1,12 +1,10 @@
 package splith1headers
 
 import (
-	"bytes"
 	"fmt"
-	"os"
 	"strings"
 
-	"golang.org/x/net/html"
+	"github.com/beevik/etree"
 )
 
 var constants = struct {
@@ -15,107 +13,65 @@ var constants = struct {
 	baseFileName: "body",
 }
 
-type nodesStruct struct {
-	Nodes        [][]*html.Node
-	curIndex     int
-	notesSection bool
+type splitStruct struct {
+	elems [][]*etree.Element
+	index int
 }
 
-func NewNodesStruct() nodesStruct {
-	return nodesStruct{
-		Nodes:        make([][]*html.Node, 1),
-		curIndex:     0,
-		notesSection: false,
+func NewSplitStruct() splitStruct {
+	return splitStruct{
+		elems: make([][]*etree.Element, 1),
+		index: 0,
 	}
 }
 
-func (n *nodesStruct) Split(inputFile string) {
-	data, err := os.ReadFile(inputFile)
+func (s *splitStruct) Split(inputFile string) {
+	doc := etree.NewDocument()
+	err := doc.ReadFromFile(inputFile)
 	if err != nil {
-		fmt.Println("ERROR IN READING FILE")
-		return
+		fmt.Println("ERROR reading from file")
 	}
 
-	rootNode, err := html.Parse(bytes.NewReader(data))
-	if err != nil {
-		fmt.Println("ERROR GOQUERY")
-		return
-	}
-
-	n.parseNode(rootNode)
-	n.renderNodes()
+	s.parseTree(&doc.Element)
+	// TODO: WRITE TO FILES
 }
 
-func (n *nodesStruct) parseNode(node *html.Node) {
-	if node.Type == html.ElementNode && !isNodeSkipped(node) {
-		if node.Data == "h1" {
-			n.curIndex += 1
-			n.Nodes = append(n.Nodes, make([]*html.Node, 0))
-			n.Nodes[n.curIndex] = append(n.Nodes[n.curIndex], node)
-		} else if node.Data == "image" {
-			src := ""
-			for _, attr := range node.Attr {
-				if strings.EqualFold(attr.Key, "href") {
-					src = attr.Val
-					break
-				}
+func (s *splitStruct) parseTree(root *etree.Element) {
+	if !isElemSkipped(root) {
+		elemToAppend := root
+		// If h1, advance to the next file
+		if root.Tag == "h1" {
+			s.elems = append(s.elems, make([]*etree.Element, 1))
+			s.index += 1
+		} else if root.Tag == "image" {
+			newElem := etree.NewElement("img")
+			newAttr := etree.Attr{
+				Key:   "src",
+				Value: root.SelectAttrValue("href", ""),
 			}
-			if len(src) > 0 {
-				newAttr := html.Attribute{
-					Key: "src",
-					Val: src,
-				}
-				newNode := &html.Node{
-					Type: html.ElementNode,
-					Attr: []html.Attribute{newAttr},
-					Data: "img",
-				}
-				n.Nodes[n.curIndex] = append(n.Nodes[n.curIndex], newNode)
-			}
-		} else {
-			// Simply append
-			n.Nodes[n.curIndex] = append(n.Nodes[n.curIndex], node)
+			newElem.Attr = append(newElem.Attr, newAttr)
+			elemToAppend = newElem
 		}
+
+		s.elems[s.index] = append(s.elems[s.index], elemToAppend)
 	}
-	for child := node.FirstChild; child != nil; child = child.NextSibling {
-		n.parseNode(child)
+
+	for _, childElem := range root.ChildElements() {
+		s.parseTree(childElem)
 	}
 }
 
-func (n *nodesStruct) renderNodes() {
-	for i, nodesPerFile := range n.Nodes {
-		// TODO: CHECK FOR NOTES
-		fileName := fmt.Sprintf("%s%02d.xhtml", constants.baseFileName, i)
-		rootNode := html.Node{
-			Type: html.ElementNode,
-			Data: "div",
-		}
-
-		for _, node := range nodesPerFile {
-			rootNode.AppendChild(node)
-		}
-
-		fmt.Printf("Writing to file: %s\n", fileName)
-		var builder strings.Builder
-		html.Render(&builder, &rootNode)
-		err := os.WriteFile(fileName, []byte(builder.String()), 0644)
-		if err != nil {
-			fmt.Printf("ERROR WRITING TO FILE %s\n", fileName)
-		}
-	}
-}
-
-func isNodeSkipped(node *html.Node) bool {
-	// Skip svg
-	if node.Data == "svg" {
+func isElemSkipped(root *etree.Element) bool {
+	// Skip <svg
+	if root.Tag == "svg" {
 		return true
 	}
 
-	// Skip <div class="svg_outer"
-	if node.Data == "div" {
-		attributes := node.Attr
-		for _, attr := range attributes {
-			if attr.Key == "class" && strings.Contains(attr.Val, "svg_outer") {
+	// Skip <div class=svg_outer
+	if root.Tag == "div" {
+		attributes := root.Attr
+		for _, attribute := range attributes {
+			if attribute.Key == "class" && strings.Contains(attribute.Value, "svg_outer") {
 				return true
 			}
 		}
