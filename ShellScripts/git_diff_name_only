@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Ref: https://gist.github.com/marcelblijleven/f63f17c34cbc2ade8932b725e6ae854b
+git --no-pager diff --name-only | tr '\n' ','
