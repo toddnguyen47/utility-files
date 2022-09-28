@@ -1,51 +1,50 @@
 package testutils;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectReader;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
- * <p>
- * Note that the "root" folder to look for resource files are in {@code src/test/resources}
- * </p>
- */
-public class ReadFromTestFilesHelper {
+* <p>
+* Note that the "root" folder to look for resource files are in {@code src/test/resources}
+* </p>
+*/
+public final class ReadFromTestFilesHelper {
 
     private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
-    private final ObjectReader objectReader;
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public ReadFromTestFilesHelper(final ObjectReader objectReader) {
-        this.objectReader = objectReader;
-    }
+    private ReadFromTestFilesHelper() {}
 
-    public JsonNode readIntoJsonNode(final String filename)
+    public static JsonNode readIntoJsonNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
         final String str = readFileAsString(filename);
-        final JsonNode jsonNode = objectReader.readValue(str);
+        final JsonNode jsonNode = OBJECT_MAPPER.readTree(str);
         return jsonNode;
     }
 
-    public ArrayNode readIntoArrayNode(final String filename)
+    public static ArrayNode readIntoArrayNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
         final JsonNode jsonNode = readIntoJsonNode(filename);
         return (ArrayNode) jsonNode;
     }
 
-    public ObjectNode readIntoObjectNode(final String filename)
+    public static ObjectNode readIntoObjectNode(final String filename)
             throws JsonParseException, JsonMappingException, IOException {
         final JsonNode jsonNode = readIntoJsonNode(filename);
         return (ObjectNode) jsonNode;
     }
 
-    public String readFileAsString(final String filename) throws IOException {
+    public static String readFileAsString(final String filename) throws IOException {
         String string = "";
         try {
             final URL url = getUrlOfFilename(filename);
@@ -61,7 +60,7 @@ public class ReadFromTestFilesHelper {
         return string;
     }
 
-    private URL getUrlOfFilename(final String filename) {
+    private static URL getUrlOfFilename(final String filename) {
         return Thread.currentThread().getContextClassLoader().getResource(filename);
     }
 }
