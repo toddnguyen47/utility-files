@@ -14,10 +14,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
-* <p>
-* Note that the "root" folder to look for resource files are in {@code src/test/resources}
-* </p>
-*/
+ * <p>
+ * Note that the "root" folder to look for resource files are in {@code src/test/resources}
+ * </p>
+ */
 public final class ReadFromTestFilesHelper {
 
     private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
