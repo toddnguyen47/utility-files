@@ -10,6 +10,12 @@ import java.util.concurrent.Executor;
 
 /**
  * Reference: <a>https://www.baeldung.com/spring-async</a>
+ *
+ * Usage:
+ * <pre>
+ *  @Async(value = SpringAsyncConfig.THREAD_POOL_NAME)
+ *  public void functionName() {}
+ * </pre>
  */
 @Configuration
 @EnableAsync
