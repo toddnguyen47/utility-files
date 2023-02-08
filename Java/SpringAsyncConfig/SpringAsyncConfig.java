@@ -32,7 +32,10 @@ public class SpringAsyncConfig {
     @Bean(name = THREAD_POOL_NAME)
     public Executor threadPoolTaskExecutor() {
         final ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+        // Create a fixed size pool by setting core pool size and max pool size
+        // Ref: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ThreadPoolExecutor.html
         threadPoolTaskExecutor.setCorePoolSize(threadCorePoolSize);
+        threadPoolTaskExecutor.setMaxPoolSize(threadCorePoolSize);
         return threadPoolTaskExecutor;
     }
 }
