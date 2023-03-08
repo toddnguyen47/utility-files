@@ -13,3 +13,13 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
       - id: check-symlinks
+  - repo: https://github.com/toddnguyen47/pre-commit-hooks
+    rev: v1.5.1
+    hooks:
+      - id: prettify-json
+        args: ["--indent", "2"] # defaults to indenting with 2 spaces
+        types: ["json"]
+      - id: convert-beginning-tabs
+        # --tab-size defaults to 4 with no args
+        args: ["--tab-size", "2"]
+        types: ["java"]
