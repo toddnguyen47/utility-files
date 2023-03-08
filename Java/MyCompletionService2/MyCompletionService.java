@@ -13,10 +13,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Sample usage of `CompletionService`.
- *
- * Ref: https://stackoverflow.com/a/11872604/6323360
- */
+* Sample usage of `CompletionService`.
+*
+* Ref: https://stackoverflow.com/a/11872604/6323360
+*/
 public final class MyCompletionService {
 	private static final Logger LOGGER = LogManager.getLogger(MyCompletionService.class);
 
