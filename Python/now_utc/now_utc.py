@@ -2,8 +2,6 @@
 
 from datetime import datetime, timedelta
 
-_FILL_SPACES = 10
-
 
 def _main():
     """Main function"""
@@ -12,9 +10,15 @@ def _main():
     start = datetime(now.year, now.month, now.day, now.hour, minutes)
     end = start + timedelta(minutes=30)
 
-    print(f'{"now:": <{_FILL_SPACES}}{_get_timeformat(now)}')
-    print(f'{"start:": <{_FILL_SPACES}}{_get_timeformat(start)}')
-    print(f'{"end:" : <{_FILL_SPACES}}{_get_timeformat(end)}')
+    _print_results("now", now)
+    _print_results("start", start)
+    _print_results("end", end)
+
+
+def _print_results(label: str, input_time: datetime):
+    """print results"""
+    print(label)
+    print(_get_timeformat(input_time))
 
 
 def _get_timeformat(input_time: datetime) -> str:
