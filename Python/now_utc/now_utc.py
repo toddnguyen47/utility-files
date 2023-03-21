@@ -18,10 +18,16 @@ def _main():
 def _print_results(label: str, input_time: datetime):
     """print results"""
     print(label)
-    print(_get_timeformat(input_time))
+    print(_get_timeformat_millis(input_time))
+    print(_get_timeformat_seconds(input_time))
 
 
-def _get_timeformat(input_time: datetime) -> str:
+def _get_timeformat_seconds(input_time: datetime) -> str:
+    """Get time format"""
+    return input_time.isoformat(timespec="seconds") + "Z"
+
+
+def _get_timeformat_millis(input_time: datetime) -> str:
     """Get time format"""
     return input_time.isoformat(timespec="milliseconds") + "Z"
 
