@@ -11,7 +11,7 @@ from datetime import datetime
 _DIRECTORIES = set([])
 _COMMAND = (
     "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/bin/java -jar "
-    "/Users/tn6091/opt/google-java-format/google-java-format-1.15.0-all-deps.jar "
+    "/Users/todd/opt/google-java-format/google-java-format-1.15.0-all-deps.jar "
     "--skip-javadoc-formatting --replace"
 )
 _NUM_PROCESSES = 4
@@ -91,7 +91,7 @@ def _handle_per_line(line: str) -> str:
 
 
 if __name__ == "__main__":
-    now = datetime.now().replace(microsecond=0)
+    now = datetime.now()
     _main()
-    end = datetime.now().replace(microsecond=0)
+    end = datetime.now()
     print(f"Time difference: {end - now}")
