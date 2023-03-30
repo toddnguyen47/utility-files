@@ -87,7 +87,7 @@ def _run_commands(yaml_config: YamlConfig, cmd: list[str], root: str, file: str)
     if yaml_config.extension is not None and file_str.endswith(yaml_config.extension):
         full_path = os.path.join(root, file_str)
         new_command = cmd + [full_path]
-        print(new_command)
+        print(" ".join(new_command))
         subprocess.run(new_command, check=True, capture_output=True)
 
         _replace_beginning_spaces(yaml_config, full_path)
