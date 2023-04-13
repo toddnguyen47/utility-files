@@ -1,53 +1,84 @@
 package encodeuricomponent;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public final class EncodeURIComponent {
-  // Since URLEncoder encodes spaces to `+`, replace `+` with `%20`
-  private static final Pattern REGEX_PLUSES = Pattern.compile("\\+");
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-  private EncodeURIComponent() {}
+/**
+* Sample usage of {@code CompletionService} and various other multithreaded functions.
+*
+* You can use either functions; they will both wait until all jobs are completed.
+*
+* Ref: https://stackoverflow.com/a/11872604/6323360
+*/
+public final class MyCompletionService {
+  private static final Logger LOGGER = LogManager.getLogger(MyCompletionService.class);
+
+  private MyCompletionService() {}
 
   /**
-  * encodeUri using Spring's `UriComponentsBuilder`. If no paths or query parameters are needed, simply pass in an
-  * empty List or an empty Map, respectively.
-  * @param uri
-  * @param paths
-  * @param queryParams
-  * @return
+    * Use `CompletionService` to invoke multithread actions
+    * @param <T>
+    * @param numThreads
+    * @param callables
+    * @throws IOException
+    */
+    public static <T> void executeWithCompletionService(
+        final int numThreads, final List<Callable<T>> callables) throws IOException {
+      ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+      CompletionService<T> completionService = new ExecutorCompletionService<>(executor);
+
+      // Submit tasks
+      int callablesSize = callables.size();
+      for (int i = 0; i < callablesSize; i++) {
+        Callable<T> callable = callables.get(i);
+        completionService.submit(callable);
+      }
+
+      // Wait for tasks to complete
+      try {
+        for (int i = 0; i < callablesSize; i++) {
+          Future<T> future = completionService.take();
+          T result = future.get();
+          LOGGER.debug("Result: {}", result);
+        }
+      } catch (final InterruptedException | ExecutionException e) {
+        LOGGER.error(e.getMessage());
+        Thread.currentThread().interrupt();
+      }
+      LOGGER.info("executeWithCompletionService() execution finished.");
+    }
+
+  /**
+  * Use `invokeAll()` to invoke multithread actions
+  * @param <T>
+  * @param numThreads
+  * @param callables
+  * @throws IOException
   */
-  public static String encodeUri(
-      final String uri, final List<String> paths, final Map<String, Object> queryParams) {
-    UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(uri);
-    for (final String path : paths) {
-      uriBuilder = uriBuilder.pathSegment(path);
-    }
-    for (final Map.Entry<String, Object> entry : queryParams.entrySet()) {
-      uriBuilder = uriBuilder.queryParam(entry.getKey(), entry.getValue());
-    }
-    UriComponents uriComponents = uriBuilder.build().encode();
-    return uriComponents.toUriString();
-  }
+  public static <T> void invokeAll(final int numThreads, final List<Callable<T>> callables)
+      throws IOException {
 
-  public static String encodeComponent(final String component) {
-    return encodeComponentCharset(component, StandardCharsets.UTF_8.toString());
-  }
-
-  public static String encodeComponentCharset(final String component, final String charset) {
-    String encoder;
+    ExecutorService executor = Executors.newFixedThreadPool(numThreads);
     try {
-      encoder = URLEncoder.encode(component, charset);
-      encoder = REGEX_PLUSES.matcher(encoder).replaceAll("%20");
-    } catch (UnsupportedEncodingException e) {
-      encoder = component;
+      List<Future<T>> results = executor.invokeAll(callables);
+      LOGGER.debug("results len: {}", results.size());
+    } catch (final InterruptedException e) {
+      for (final StackTraceElement elem : e.getStackTrace()) {
+        LOGGER.error(elem);
+      }
+      throw new IOException(e);
     }
-    return encoder;
+    executor.shutdown();
+    LOGGER.info("invokeAll() execution finished.");
   }
 }

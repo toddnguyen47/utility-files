@@ -1,7 +1,6 @@
 package MyCompletionService;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
@@ -15,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 
 /**
 * Sample usage of {@code CompletionService} and various other multithreaded functions.
+*
+* You can use either functions; they will both wait until all jobs are completed.
 *
 * Ref: https://stackoverflow.com/a/11872604/6323360
 */
@@ -36,24 +37,22 @@ public final class MyCompletionService {
     CompletionService<T> completionService = new ExecutorCompletionService<>(executor);
 
     // Submit tasks
-    Iterator<Callable<T>> iter = callables.iterator();
-    while (iter.hasNext()) {
-      Callable<T> callable = iter.next();
+    int callablesSize = callables.size();
+    for (int i = 0; i < callablesSize; i++) {
+      Callable<T> callable = callables.get(i);
       completionService.submit(callable);
     }
-    executor.shutdown();
 
     // Wait for tasks to complete
     try {
-      while (!executor.isTerminated()) {
+      for (int i = 0; i < callablesSize; i++) {
         Future<T> future = completionService.take();
-        T results = future.get();
-        LOGGER.debug(results);
+        T result = future.get();
+        LOGGER.debug("Result: {}", result);
       }
     } catch (final InterruptedException | ExecutionException e) {
-      for (final StackTraceElement elem : e.getStackTrace()) {
-        LOGGER.error(elem);
-      }
+      LOGGER.error(e.getMessage());
+      throw new IOException(e);
     }
     LOGGER.info("executeWithCompletionService() execution finished.");
   }
@@ -73,9 +72,7 @@ public final class MyCompletionService {
       List<Future<T>> results = executor.invokeAll(callables);
       LOGGER.debug("results len: {}", results.size());
     } catch (final InterruptedException e) {
-      for (final StackTraceElement elem : e.getStackTrace()) {
-        LOGGER.error(elem);
-      }
+      LOGGER.error(e.getMessage());
       throw new IOException(e);
     }
     executor.shutdown();
