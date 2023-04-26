@@ -1,19 +1,19 @@
-package pubsub;
+package PublisherSubscriberExample.src.pubsub;
 
 /**
  * Topic-based system.
- * 
+ *
  * @author Todd Nguyen
  *
  */
 public class Publisher {
-  Topic topic_;
+    Topic topic_;
 
-  public Publisher(Topic t) {
-    topic_ = t;
-  }
+    public Publisher(Topic t) {
+        topic_ = t;
+    }
 
-  public void publish(String m) {
-    MessageBroker.getInstance().sendMessage(topic_, m);
-  }
+    public void publish(String m) {
+        MessageBroker.getInstance().sendMessage(topic_, m);
+    }
 }

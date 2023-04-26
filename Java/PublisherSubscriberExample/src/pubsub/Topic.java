@@ -1,13 +1,13 @@
-package pubsub;
+package PublisherSubscriberExample.src.pubsub;
 
 public class Topic {
-  private String nameOfTopic_;
+    private String nameOfTopic_;
 
-  public Topic(String nameOfTopic) {
-    nameOfTopic_ = nameOfTopic;
-  }
+    public Topic(String nameOfTopic) {
+        nameOfTopic_ = nameOfTopic;
+    }
 
-  public String getTopicName() {
-    return nameOfTopic_;
-  }
+    public String getTopicName() {
+        return nameOfTopic_;
+    }
 }
