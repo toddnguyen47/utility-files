@@ -54,6 +54,7 @@ public final class MyCompletionService {
             LOGGER.error(e.getMessage());
             throw new IOException(e);
         }
+        executor.shutdown();
         LOGGER.info("executeWithCompletionService() execution finished.");
     }
 
