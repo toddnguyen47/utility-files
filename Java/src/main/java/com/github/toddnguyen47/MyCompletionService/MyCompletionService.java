@@ -53,8 +53,9 @@ public final class MyCompletionService {
         } catch (final InterruptedException | ExecutionException e) {
             LOGGER.error(e.getMessage());
             throw new IOException(e);
+        } finally {
+            executor.shutdown();
         }
-        executor.shutdown();
         LOGGER.info("executeWithCompletionService() execution finished.");
     }
 
@@ -75,8 +76,9 @@ public final class MyCompletionService {
         } catch (final InterruptedException e) {
             LOGGER.error(e.getMessage());
             throw new IOException(e);
+        } finally {
+            executor.shutdown();
         }
-        executor.shutdown();
         LOGGER.info("invokeAll() execution finished.");
     }
 }
