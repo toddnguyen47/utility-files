@@ -8,8 +8,7 @@ import java.util.Random;
  */
 public final class RetryJitter {
 
-    private static final Instant NOW = Instant.now();
-    private static final Random RANDOM = new Random(NOW.toEpochMilli());
+    private static final Random RANDOM = new Random(Instant.now().toEpochMilli());
     private static final int MIN_SLEEP_TIME_MILLIS = 50;
 
     private RetryJitter() {}
@@ -24,6 +23,8 @@ public final class RetryJitter {
             timeoutMillisInner = 100;
         }
         int count = 0;
+        Instant now = Instant.now();
+        RANDOM.setSeed(now.toEpochMilli());
 
         for (; count <= retryTimes && keepRetrying; count++) {
             if (count > 0) {
