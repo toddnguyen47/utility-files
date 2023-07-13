@@ -23,12 +23,20 @@ import org.apache.logging.log4j.Logger;
  * Ref: https://stackoverflow.com/a/11872604/6323360
  */
 public class MyCompletionService {
+
+  public static final byte BYTE_TRUE = 1;
+  public static final byte BYTE_FALSE = 0;
+
   private static final Logger LOGGER = LogManager.getLogger(MyCompletionService.class);
 
   private final ExecutorService executor;
 
   public MyCompletionService(final int numThreads) {
-    this.executor = Executors.newFixedThreadPool(numThreads);
+    int n1 = numThreads;
+    if (n1 <= 0) {
+      n1 = 1;
+    }
+    this.executor = Executors.newFixedThreadPool(n1);
   }
 
   public void shutdown() {

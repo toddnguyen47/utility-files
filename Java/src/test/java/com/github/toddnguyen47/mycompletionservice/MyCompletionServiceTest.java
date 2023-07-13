@@ -29,6 +29,24 @@ public class MyCompletionServiceTest {
   }
 
   @Test
+  public void testWithLessThanOneThread() throws IOException {
+    Random random = new Random(Instant.now().toEpochMilli());
+    List<Callable<Integer>> callables = new ArrayList<>();
+    for (int i = 0; i < 20; i++) {
+      final int jobNumber = i;
+      callables.add(
+          () -> {
+            printJob(random, jobNumber);
+            return 0;
+          });
+    }
+    MyCompletionService sutMyCompletionService = new MyCompletionService(0);
+    sutMyCompletionService.executeWithCompletionService(callables);
+    sutMyCompletionService.shutdown();
+    System.out.println("Finished!");
+  }
+
+  @Test
   public void testInvokeAll() throws IOException {
     Random random = new Random(Instant.now().toEpochMilli());
     List<Callable<Integer>> callables = new ArrayList<>();
