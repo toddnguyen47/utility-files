@@ -7,13 +7,13 @@ package PublisherSubscriberExample.src.pubsub;
  *
  */
 public class Publisher {
-    Topic topic_;
+  Topic topic_;
 
-    public Publisher(Topic t) {
-        topic_ = t;
-    }
+  public Publisher(Topic t) {
+    topic_ = t;
+  }
 
-    public void publish(String m) {
-        MessageBroker.getInstance().sendMessage(topic_, m);
-    }
+  public void publish(String m) {
+    MessageBroker.getInstance().sendMessage(topic_, m);
+  }
 }

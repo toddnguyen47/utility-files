@@ -11,21 +11,21 @@ import java.time.format.DateTimeFormatter;
  */
 public final class DateTimeUtils {
 
-    public static final DateTimeFormatter DT_ISO8601_MILLIS =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneOffset.UTC);
-    public static final DateTimeFormatter DT_ISO8601_NO_MILLIS =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC);
-    public static final DateTimeFormatter DT_ISO8601_DATE_ONLY =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
+  public static final DateTimeFormatter DT_ISO8601_MILLIS =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneOffset.UTC);
+  public static final DateTimeFormatter DT_ISO8601_NO_MILLIS =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC);
+  public static final DateTimeFormatter DT_ISO8601_DATE_ONLY =
+      DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
 
-    private DateTimeUtils() {}
+  private DateTimeUtils() {}
 
-    public static Instant nowUTC() {
-        return Instant.now(Clock.system(ZoneOffset.UTC));
-    }
+  public static Instant nowUTC() {
+    return Instant.now(Clock.system(ZoneOffset.UTC));
+  }
 
-    public static ZonedDateTime nowUTCDateTime() {
-        Instant now = Instant.now();
-        return now.atZone(ZoneOffset.UTC);
-    }
+  public static ZonedDateTime nowUTCDateTime() {
+    Instant now = Instant.now();
+    return now.atZone(ZoneOffset.UTC);
+  }
 }

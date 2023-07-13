@@ -19,47 +19,47 @@ import java.nio.file.Paths;
  */
 public final class ReadFromTestFilesHelper {
 
-    private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  private static final String FILE_NAME_NOT_FOUND = "file name not found: '%s'\n";
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private ReadFromTestFilesHelper() {}
+  private ReadFromTestFilesHelper() {}
 
-    public static JsonNode readIntoJsonNode(final String filename)
-            throws JsonParseException, JsonMappingException, IOException {
-        final String str = readFileAsString(filename);
-        final JsonNode jsonNode = OBJECT_MAPPER.readTree(str);
-        return jsonNode;
+  public static JsonNode readIntoJsonNode(final String filename)
+      throws JsonParseException, JsonMappingException, IOException {
+    final String str = readFileAsString(filename);
+    final JsonNode jsonNode = OBJECT_MAPPER.readTree(str);
+    return jsonNode;
+  }
+
+  public static ArrayNode readIntoArrayNode(final String filename)
+      throws JsonParseException, JsonMappingException, IOException {
+    final JsonNode jsonNode = readIntoJsonNode(filename);
+    return (ArrayNode) jsonNode;
+  }
+
+  public static ObjectNode readIntoObjectNode(final String filename)
+      throws JsonParseException, JsonMappingException, IOException {
+    final JsonNode jsonNode = readIntoJsonNode(filename);
+    return (ObjectNode) jsonNode;
+  }
+
+  public static String readFileAsString(final String filename) throws IOException {
+    String string = "";
+    try {
+      final URL url = getUrlOfFilename(filename);
+      if (url == null) {
+        throw new IllegalArgumentException();
+      }
+      final Path path = Paths.get(url.getFile());
+      string = new String(Files.readAllBytes(path));
+    } catch (final IllegalArgumentException exception) {
+      System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
+      throw exception;
     }
+    return string;
+  }
 
-    public static ArrayNode readIntoArrayNode(final String filename)
-            throws JsonParseException, JsonMappingException, IOException {
-        final JsonNode jsonNode = readIntoJsonNode(filename);
-        return (ArrayNode) jsonNode;
-    }
-
-    public static ObjectNode readIntoObjectNode(final String filename)
-            throws JsonParseException, JsonMappingException, IOException {
-        final JsonNode jsonNode = readIntoJsonNode(filename);
-        return (ObjectNode) jsonNode;
-    }
-
-    public static String readFileAsString(final String filename) throws IOException {
-        String string = "";
-        try {
-            final URL url = getUrlOfFilename(filename);
-            if (url == null) {
-                throw new IllegalArgumentException();
-            }
-            final Path path = Paths.get(url.getFile());
-            string = new String(Files.readAllBytes(path));
-        } catch (final IllegalArgumentException exception) {
-            System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
-            throw exception;
-        }
-        return string;
-    }
-
-    private static URL getUrlOfFilename(final String filename) {
-        return Thread.currentThread().getContextClassLoader().getResource(filename);
-    }
+  private static URL getUrlOfFilename(final String filename) {
+    return Thread.currentThread().getContextClassLoader().getResource(filename);
+  }
 }

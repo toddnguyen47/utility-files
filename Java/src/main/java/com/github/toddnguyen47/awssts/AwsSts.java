@@ -7,22 +7,22 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
 
 public class AwsSts {
-    public AmazonSimpleEmailService initializeSimpleEmailServiceClient(String awsRegion) {
+  public AmazonSimpleEmailService initializeSimpleEmailServiceClient(String awsRegion) {
 
-        AWSSecurityTokenService stsService =
-                AWSSecurityTokenServiceClientBuilder.standard().withRegion(awsRegion).build();
-        STSSessionCredentialsProvider credentialsProviderAutoRefresh =
-                new STSSessionCredentialsProvider(stsService);
-        AmazonSimpleEmailService client =
-                AmazonSimpleEmailServiceClientBuilder.standard()
-                        .withCredentials(credentialsProviderAutoRefresh)
-                        .withRegion(awsRegion)
-                        .build();
+    AWSSecurityTokenService stsService =
+        AWSSecurityTokenServiceClientBuilder.standard().withRegion(awsRegion).build();
+    STSSessionCredentialsProvider credentialsProviderAutoRefresh =
+        new STSSessionCredentialsProvider(stsService);
+    AmazonSimpleEmailService client =
+        AmazonSimpleEmailServiceClientBuilder.standard()
+            .withCredentials(credentialsProviderAutoRefresh)
+            .withRegion(awsRegion)
+            .build();
 
-        if (client == null) {
-            // TODO: Log error here!
-        }
-
-        return client;
+    if (client == null) {
+      // TODO: Log error here!
     }
+
+    return client;
+  }
 }

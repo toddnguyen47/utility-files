@@ -38,72 +38,72 @@ import java.util.List;
  * </div>
  */
 public final class ObjectMapperHelper {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private ObjectMapperHelper() {}
+  private ObjectMapperHelper() {}
 
-    /**
-     * Create ObjectReader for the `JsonNode` class
-     *
-     * @return
-     */
-    public static ObjectReader createObjectReader() {
-        return OBJECT_MAPPER.readerFor(JsonNode.class);
-    }
+  /**
+   * Create ObjectReader for the `JsonNode` class
+   *
+   * @return
+   */
+  public static ObjectReader createObjectReader() {
+    return OBJECT_MAPPER.readerFor(JsonNode.class);
+  }
 
-    /**
-     * Create ObjectReader for a specific class
-     *
-     * @return
-     */
-    public static ObjectReader createObjectReader(final Class<?> clazz) {
-        return OBJECT_MAPPER.readerFor(clazz);
-    }
+  /**
+   * Create ObjectReader for a specific class
+   *
+   * @return
+   */
+  public static ObjectReader createObjectReader(final Class<?> clazz) {
+    return OBJECT_MAPPER.readerFor(clazz);
+  }
 
-    /**
-     * Create ObjectReader for a specific TypeReference
-     *
-     * @return
-     */
-    public static ObjectReader createObjectReader(final TypeReference<?> type) {
-        return OBJECT_MAPPER.readerFor(type);
-    }
+  /**
+   * Create ObjectReader for a specific TypeReference
+   *
+   * @return
+   */
+  public static ObjectReader createObjectReader(final TypeReference<?> type) {
+    return OBJECT_MAPPER.readerFor(type);
+  }
 
-    /**
-     * Create a default ObjectWriter
-     *
-     * @return
-     */
-    public static ObjectWriter createObjectWriter() {
-        return OBJECT_MAPPER.writer();
-    }
+  /**
+   * Create a default ObjectWriter
+   *
+   * @return
+   */
+  public static ObjectWriter createObjectWriter() {
+    return OBJECT_MAPPER.writer();
+  }
 
-    /**
-     * Get a <code>JsonNodeFactory</code> that can be used to create <code>ArrayNode</code> and
-     * <code>ObjectNode</code>
-     *
-     * @return
-     */
-    public static JsonNodeFactory getNodeFactory() {
-        return OBJECT_MAPPER.getNodeFactory();
-    }
+  /**
+   * Get a <code>JsonNodeFactory</code> that can be used to create <code>ArrayNode</code> and
+   * <code>ObjectNode</code>
+   *
+   * @return
+   */
+  public static JsonNodeFactory getNodeFactory() {
+    return OBJECT_MAPPER.getNodeFactory();
+  }
 
-    /**
-     * See {@link ObjectMapper#valueToTree(Object)}
-     *
-     * @param object
-     * @return
-     */
-    public static JsonNode valueToTree(final Object object) {
-        return OBJECT_MAPPER.valueToTree(object);
-    }
+  /**
+   * See {@link ObjectMapper#valueToTree(Object)}
+   *
+   * @param object
+   * @return
+   */
+  public static JsonNode valueToTree(final Object object) {
+    return OBJECT_MAPPER.valueToTree(object);
+  }
 
-    public static ObjectMapper getObjectMapper() {
-        return OBJECT_MAPPER;
-    }
+  public static ObjectMapper getObjectMapper() {
+    return OBJECT_MAPPER;
+  }
 
-    public static List<String> readIntoStringList(final JsonNode node) throws IOException {
-        String[] arr = OBJECT_MAPPER.treeToValue(node, String[].class);
-        return Arrays.asList(arr);
-    }
+  public static List<String> readIntoStringList(final JsonNode node) throws IOException {
+    String[] arr = OBJECT_MAPPER.treeToValue(node, String[].class);
+    return Arrays.asList(arr);
+  }
 }

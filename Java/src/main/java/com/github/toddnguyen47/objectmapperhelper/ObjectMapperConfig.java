@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ObjectMapperConfig {
 
-    @Bean
-    public com.fasterxml.jackson.databind.ObjectMapper createObjectMapper() {
-        return new com.fasterxml.jackson.databind.ObjectMapper();
-    }
+  @Bean
+  public com.fasterxml.jackson.databind.ObjectMapper createObjectMapper() {
+    return new com.fasterxml.jackson.databind.ObjectMapper();
+  }
 }
