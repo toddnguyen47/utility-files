@@ -1,4 +1,4 @@
-package com.github.toddnguyen47.LogProgress;
+package com.github.toddnguyen47.logprogress;
 
 /**
  * Log Progress

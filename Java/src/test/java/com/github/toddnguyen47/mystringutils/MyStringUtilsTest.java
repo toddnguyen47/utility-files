@@ -1,6 +1,5 @@
 package com.github.toddnguyen47.mystringutils;
 
-import com.github.toddnguyen47.MyStringUtils.MyStringUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
