@@ -19,7 +19,10 @@ def _print_results(label: str, input_time: datetime):
     """print results"""
     print(label)
     print(_get_timeformat_millis(input_time))
-    print(_get_timeformat_seconds(input_time))
+    seconds = _get_timeformat_seconds(input_time)
+    seconds_files = seconds.replace(":", "-")
+    print(seconds)
+    print(seconds_files)
 
 
 def _get_timeformat_seconds(input_time: datetime) -> str:
