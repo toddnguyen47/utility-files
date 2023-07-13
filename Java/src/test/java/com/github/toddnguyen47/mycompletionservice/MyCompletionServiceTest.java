@@ -10,25 +10,45 @@ import org.junit.Test;
 
 public class MyCompletionServiceTest {
 
-    @Test
-    public void testBlah() throws IOException {
-        Random random = new Random(Instant.now().toEpochMilli());
-        List<Callable<Integer>> callables = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            final int jobNumber = i;
-            callables.add(
-                    () -> {
-                        printJob(random, jobNumber);
-                        return 0;
-                    });
-        }
-        MyCompletionService.executeWithCompletionService(4, callables);
-        System.out.println("Finished!");
+  @Test
+  public void testExecuteWithCompletionService() throws IOException {
+    Random random = new Random(Instant.now().toEpochMilli());
+    List<Callable<Integer>> callables = new ArrayList<>();
+    for (int i = 0; i < 20; i++) {
+      final int jobNumber = i;
+      callables.add(
+          () -> {
+            printJob(random, jobNumber);
+            return 0;
+          });
     }
+    MyCompletionService sutMyCompletionService = new MyCompletionService(4);
+    sutMyCompletionService.executeWithCompletionService(callables);
+    sutMyCompletionService.shutdown();
+    System.out.println("Finished!");
+  }
 
-    private void printJob(Random random, int jobNumber) throws InterruptedException {
-        int randomSleep = random.nextInt(1000);
-        Thread.sleep(randomSleep);
-        System.out.println("job " + jobNumber + ", slept for: " + randomSleep);
+  @Test
+  public void testInvokeAll() throws IOException {
+    Random random = new Random(Instant.now().toEpochMilli());
+    List<Callable<Integer>> callables = new ArrayList<>();
+    for (int i = 0; i < 20; i++) {
+      final int jobNumber = i;
+      callables.add(
+          () -> {
+            printJob(random, jobNumber);
+            return 0;
+          });
     }
+    MyCompletionService sutMyCompletionService = new MyCompletionService(4);
+    sutMyCompletionService.invokeAll(callables);
+    sutMyCompletionService.shutdown();
+    System.out.println("Finished!");
+  }
+
+  private void printJob(Random random, int jobNumber) throws InterruptedException {
+    int randomSleep = random.nextInt(1000);
+    Thread.sleep(randomSleep);
+    System.out.println("job " + jobNumber + ", slept for: " + randomSleep);
+  }
 }
