@@ -12,9 +12,9 @@ import java.time.format.DateTimeFormatter;
 public final class DateTimeUtils {
 
   public static final DateTimeFormatter DT_ISO8601_MILLIS =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").withZone(ZoneOffset.UTC);
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX").withZone(ZoneOffset.UTC);
   public static final DateTimeFormatter DT_ISO8601_NO_MILLIS =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'").withZone(ZoneOffset.UTC);
+      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssX").withZone(ZoneOffset.UTC);
   public static final DateTimeFormatter DT_ISO8601_DATE_ONLY =
       DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
 
