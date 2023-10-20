@@ -2,22 +2,23 @@
 import argparse
 
 
-def _main():
-    """main function. use local variables instead of globals to run faster"""
+class Main:
+    """main class"""
 
-    def _main_helper():
+    def main(self):
         """main 'main' function"""
         parser = argparse.ArgumentParser(description="quickly generate go mocks")
         parser.add_argument("interfaces_to_mock", nargs="+", help="classes to generate mocks for")
         args = parser.parse_args()
 
-        _generate(args.interfaces_to_mock)
+        self._generate(args.interfaces_to_mock)
 
-    def _generate(interfaces: list[str]):
+    def _generate(self, interfaces: list[str]):
         """generate mocks now"""
         for i_1 in interfaces:
             s_1 = i_1.split(".")
             name = s_1[len(s_1) - 1]
+            name = name[0].upper() + name[1:]
             mock_name = f"mock{name}"
             fn_name = f"newMock{name}()"
             print("")
@@ -26,9 +27,11 @@ def _main():
             print("// ------------------------------------------------------------")
             print("")
 
+            print(f"var _ {i_1} = {fn_name}")
+            print("")
             print(f"type {mock_name} struct" + "{}")
             print("")
-            print(f"func {fn_name} {i_1}" + " {")
+            print(f"func {fn_name} *{mock_name}" + " {")
             print(f"\ti1 := {mock_name}" + "{}")
             print("\treturn &i1")
             print("}")
@@ -42,9 +45,7 @@ def _main():
             print("// \\----------------------------------------------------------/")
             print("")
 
-    # run function now
-    _main_helper()
-
 
 if __name__ == "__main__":
-    _main()
+    main = Main()
+    main.main()
