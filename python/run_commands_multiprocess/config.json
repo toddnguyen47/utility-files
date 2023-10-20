@@ -1,0 +1,8 @@
+{
+  "commands": [
+    "/Library/Java/JavaVirtualMachines/temurin-17.jdk/Contents/Home/bin/java -jar /Users/tn6091/opt/google-java-format/google-java-format-1.16.0-all-deps.jar --skip-javadoc-formatting --replace"
+  ],
+  "directory": "",
+  "numProcesses": 8,
+  "extension": "java"
+}
