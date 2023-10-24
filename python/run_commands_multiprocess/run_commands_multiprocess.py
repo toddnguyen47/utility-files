@@ -65,8 +65,8 @@ class Main:
                 cmd = self._re_multiple_spaces.sub(" ", cmd)
                 cmd = cmd.split(" ")
                 cmd.append(full_path)
-                print(cmd)
-                subprocess.run(cmd, check=True, capture_output=True)
+                output = subprocess.run(cmd, check=True, capture_output=True)
+                print(output.stdout.decode(encoding="utf-8"))
 
     def _read_json_config(self, file_path: str) -> Config:
         """read in JSON config"""
