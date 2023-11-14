@@ -8,7 +8,9 @@ class Main:
     def main(self):
         """main 'main' function"""
         parser = argparse.ArgumentParser(description="quickly generate go mocks")
-        parser.add_argument("interfaces_to_mock", nargs="+", help="classes to generate mocks for")
+        parser.add_argument(
+            "interfaces_to_mock", nargs="+", help="classes to generate mocks for"
+        )
         args = parser.parse_args()
 
         self._generate(args.interfaces_to_mock)
