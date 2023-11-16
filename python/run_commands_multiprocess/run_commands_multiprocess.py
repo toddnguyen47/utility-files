@@ -6,6 +6,7 @@ import subprocess
 import concurrent.futures
 import re
 import json
+from datetime import datetime, timezone
 from dataclasses import dataclass
 
 
@@ -19,7 +20,7 @@ class Config:
     extension: str
 
 
-class Main:
+class Main: # pylint: disable=too-few-public-methods
     """Main class"""
 
     _re_multiple_spaces = re.compile(" +")
@@ -83,6 +84,9 @@ class Main:
 
 if __name__ == "__main__":
     m_1 = Main()
-    print("starting")
+    print("Starting")
+    start = datetime.now(timezone.utc)
     m_1.main()
-    print("finished")
+    end = datetime.now(timezone.utc)
+    print("Finished")
+    print(f"Time taken: {end - start}")
