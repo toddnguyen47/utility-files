@@ -1,14 +1,14 @@
 package com.github.toddnguyen47.retryjitter;
 
+import java.security.SecureRandom;
 import java.time.Instant;
-import java.util.Random;
 
 /**
  * RetryJitter - Ref: https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/
  */
 public final class RetryJitter {
 
-  private static final Random RANDOM = new Random(Instant.now().toEpochMilli());
+  private static final SecureRandom RANDOM = new SecureRandom();
   private static final int MIN_SLEEP_TIME_MILLIS = 50;
 
   private RetryJitter() {}
