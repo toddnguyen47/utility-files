@@ -35,15 +35,15 @@ class Main:
                     if font_size:
                         font_size = float(font_size.group(0))
                         if font_size < 1.0:
-                            line = self._PRECEDING_SPACES + "/* " + line.strip() + " */"
+                            line = self._comment_out_line(line)
             elif "font-family" in first_token:
                 font = tokens[1].lower()
                 if "serif" in font or "sans-serif" in font or "monospace" in font:
-                    line = self._PRECEDING_SPACES + "/* " + line.strip() + " */"
+                    line = self._comment_out_line(line)
             elif "text-align" in first_token:
                 text_align = tokens[1].lower()
                 if "justify" in text_align:
-                    line = self._PRECEDING_SPACES + "/* " + line.strip() + " */"
+                    line = self._comment_out_line(line)
             new_lines.append(line)
 
         # output now
@@ -52,6 +52,10 @@ class Main:
         with open(output_filename, "w", encoding=self._ENCODING) as outfile:
             outfile.write("\n".join(new_lines))
         print(f"Finished writing to '{output_filename}'")
+
+    def _comment_out_line(self, line: str) -> str:
+        """comment out line"""
+        return self._PRECEDING_SPACES + "/* " + line.strip() + " */"
 
 
 if __name__ == "__main__":
