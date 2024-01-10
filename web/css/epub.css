@@ -1,8 +1,10 @@
+/* Ref: https://www.youtube.com/watch?v=WlGQdgy-M6w */
 *,
-*::after,
-*::before {
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
 body {
   line-height: 1.2em;
   font-size: 1em;
@@ -415,8 +417,6 @@ p.yield {
 div.procedure {
   margin-top: 1em;
   margin-bottom: 1em;
-}
-div.step {
 }
 h1.recipe-title {
   font-size: 1.15em;
@@ -972,8 +972,6 @@ img {
   font-style: italic;
   text-align: center;
   text-indent: 0;
-}
-.tx {
 }
 .orn0 {
   margin-top: 1.5em;
