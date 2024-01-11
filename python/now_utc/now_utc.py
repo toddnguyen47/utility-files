@@ -11,6 +11,10 @@ def _main():
     end = start + timedelta(minutes=30)
 
     _print_results("now", now)
+
+    print("local time")
+    print(datetime.now().astimezone().replace(microsecond=0).isoformat())
+
     _print_results("start", start)
     _print_results("end", end)
 
