@@ -1,0 +1,38 @@
+/* Ref: https://www.youtube.com/watch?v=WlGQdgy-M6w */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@media screen and (min-width: 900px) {
+    .container {
+        width: 80%;
+    }
+}
+
+.container {
+    display: grid;
+    /* background-color: rebeccapurple; */
+    grid-template-columns: 1fr 1fr 1fr;
+    font-size: 30px;
+    align-self: center;
+    margin: auto;
+}
+
+.container div {
+    padding: 30px;
+    line-height: normal;
+}
+
+.container div.col1 p {
+    font-family: "Spectral", serif;
+}
+
+.container div.col2 p {
+    font-family: "PT Serif", serif;
+}
+
+.container div.col3 p {
+    font-family: "Zilla Slab", serif;
+}
