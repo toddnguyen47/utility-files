@@ -1,19 +1,19 @@
 """Get now in UTC with the minutes set to previous hour"""
 
-from datetime import datetime, timedelta
+import datetime
 
 
 def _main():
     """Main function"""
-    now = datetime.utcnow()
+    now = datetime.datetime.now(datetime.UTC)
     minutes = _get_minute(now)
-    start = datetime(now.year, now.month, now.day, now.hour, minutes)
-    end = start + timedelta(minutes=30)
+    start = datetime.datetime(now.year, now.month, now.day, now.hour, minutes)
+    end = start + datetime.timedelta(minutes=30)
 
     _print_results("now", now)
 
     print("local time")
-    print(datetime.now().astimezone().replace(microsecond=0).isoformat())
+    print(now.astimezone().replace(microsecond=0).isoformat())
 
     _print_results("start", start)
     _print_results("end", end)
