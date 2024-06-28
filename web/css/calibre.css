@@ -1,13 +1,8 @@
 /* Lithium Background color: (245, 222, 179) #f5deb3 */
 
 /* ref: https://friendsofepub.github.io/eBookTricks/ */
-body {
-  line-height: 1.5;
-  text-align: left;
-}
-
 body * {
-  line-height: 1.5;
+  line-height: 1.3;
   text-align: left;
 }
 
