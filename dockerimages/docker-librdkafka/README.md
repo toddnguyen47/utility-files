@@ -2,6 +2,8 @@
 
 This is the Dockerfile to be used to compile librdkafka for AWS Lambda AL2023.
 
+NOTE: You must also copy `.dockerignore` file! This way every time you COPY, the cache can ignore changes to Dockerfile and Dockerfile_Libs.
+
 - Install podman (CLI at the least) at https://podman.io/
 - Init and start podman machine.
 
