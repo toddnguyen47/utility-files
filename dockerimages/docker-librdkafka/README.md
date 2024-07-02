@@ -2,6 +2,8 @@
 
 This is the Dockerfile to be used to compile librdkafka for AWS Lambda AL2023.
 
+You can change the `--platform` tag to any platform that you would like. Reference: https://docs.docker.com/build/building/multi-platform/
+
 NOTE: You must also copy `.dockerignore` file! This way every time you COPY, the cache can ignore changes to Dockerfile and Dockerfile_Libs.
 
 - Install podman (CLI at the least) at https://podman.io/
@@ -25,6 +27,9 @@ git clone https://github.com/confluentinc/librdkafka.git
 cd librdkafka
 git checkout v2.4.0
 ```
+
+- If you want SSL, https://github.com/confluentinc/librdkafka/wiki/Using-SSL-with-librdkafka
+- If you want SASL: https://github.com/confluentinc/librdkafka/wiki/Using-SASL-with-librdkafka
 
 - Copy [Dockerfile](Dockerfile) into the librdkafka folder.
 - Run the below command.

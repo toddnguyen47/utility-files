@@ -2,11 +2,11 @@ FROM docker.io/alpine/git as stagegit
 WORKDIR /
 RUN git clone https://github.com/Tencent/rapidjson.git
 
-FROM public.ecr.aws/amazonlinux/amazonlinux:2023 as stageal2023
+FROM public.ecr.aws/amazonlinux/amazonlinux as stageal2023
 RUN dnf update -y && \
     dnf group install -y "Development Tools"
 
 FROM stageal2023 as stagelibdev
 COPY --from=stagegit /rapidjson/include /include
 ENV CPLUS_INCLUDE_PATH=/include
-RUN dnf install -y libcurl-devel lz4-devel libbsd-devel
+RUN dnf install -y libcurl-devel lz4-devel openssl-devel cyrus-sasl-gssapi cyrus-sasl-devel
