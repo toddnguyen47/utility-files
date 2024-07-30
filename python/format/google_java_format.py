@@ -28,8 +28,8 @@ class Main:  # pylint: disable=too-few-public-methods
         parser.add_argument("--google-jar", help="full path to google java format JAR")
         parser.add_argument(
             "--convert-to-tabs",
-            required=False,
             help="full path of executable to convert to tabs",
+            required=False,
         )
         parser.add_argument("path", help="path to file / folder")
         args = parser.parse_args()
@@ -84,8 +84,6 @@ class Main:  # pylint: disable=too-few-public-methods
         trimmed_path = path.strip()
         command = convert_to_tabs_command + [trimmed_path]
         if len(command) > 0:
-            # print(f"converting from spaces to tabs: {trimmed_path}")
-            print(" ".join(command))
             subprocess.run(command, check=True)
 
     def _get_java_command(self, args: argparse.Namespace) -> list[str]:
@@ -94,7 +92,7 @@ class Main:  # pylint: disable=too-few-public-methods
             java_exec,
             "-jar",
             google_jar,
-            # "--skip-javadoc-formatting",
+            "--skip-javadoc-formatting",
             "--replace",
         ]
         return command
@@ -114,7 +112,7 @@ class Main:  # pylint: disable=too-few-public-methods
                 "--ws-from",
                 "space",
                 "--comment-char",
-                '"*"',
+                '*',
                 "--num-spaces",
                 "2",
                 "--",
