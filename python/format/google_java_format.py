@@ -31,7 +31,7 @@ class Main:  # pylint: disable=too-few-public-methods
             help="full path of executable to convert to tabs",
             required=False,
         )
-        parser.add_argument("path", help="path to file / folder")
+        parser.add_argument("paths", help="path(s) to file / folder", nargs="+")
         args = parser.parse_args()
 
         mode = args.mode
@@ -44,8 +44,10 @@ class Main:  # pylint: disable=too-few-public-methods
         """handle file"""
         java_command = self._get_java_command(args)
         convert_to_tabs_command = self._get_convert_to_tabs_command(args)
-        path = args.path.strip()
-        self._handle_file_helper(java_command, convert_to_tabs_command, path)
+        for path in args.paths:
+            trimmed_path = path.strip()
+            if trimmed_path:
+                self._handle_file_helper(java_command, convert_to_tabs_command, path)
 
     def _handle_file_helper(
         self, java_command: list[str], convert_to_tabs_command: list[str], path: str
