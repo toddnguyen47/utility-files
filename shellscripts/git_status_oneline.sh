@@ -8,5 +8,13 @@ if [ -n $1 ]; then
     extension=$1
 fi
 
-git status --short | grep "${extension}" | awk '{ print $2 }' | tr '\n' ' '
+git status --short \
+    | \
+    grep "${extension}" \
+    | \
+    grep --invert-match -E "^D" \
+    | \
+    awk '{ print $2 }' \
+    | \
+    tr '\n' ' '
 echo ""
