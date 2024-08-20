@@ -44,19 +44,25 @@ public final class ReadFromTestFilesHelper {
   }
 
   public static String readFileAsString(final String filename) throws IOException {
-    String string = "";
+    byte[] bytes = readFileAsBytes(filename);
+    return new String(bytes);
+  }
+
+  public static byte[] readFileAsBytes(final String filename) throws IOException {
+    final URL url;
+    url = getUrlOfFilename(filename);
+    if (url == null) {
+      throw new IllegalArgumentException();
+    }
+    final byte[] bytes;
     try {
-      final URL url = getUrlOfFilename(filename);
-      if (url == null) {
-        throw new IllegalArgumentException();
-      }
       final Path path = Paths.get(url.getFile());
-      string = new String(Files.readAllBytes(path));
+      bytes = Files.readAllBytes(path);
     } catch (final IllegalArgumentException exception) {
       System.out.printf(FILE_NAME_NOT_FOUND, filename); // NOPMD
       throw exception;
     }
-    return string;
+    return bytes;
   }
 
   private static URL getUrlOfFilename(final String filename) {
