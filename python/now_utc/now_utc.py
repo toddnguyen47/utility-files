@@ -9,6 +9,7 @@ def _main():
     minutes = _get_minute(now)
     start = datetime.datetime(now.year, now.month, now.day, now.hour, minutes)
     end = start + datetime.timedelta(minutes=30)
+    end_plus_one_day = start + datetime.timedelta(days=1)
 
     _print_results("now", now)
 
@@ -17,6 +18,7 @@ def _main():
 
     _print_results("start", start)
     _print_results("end", end)
+    _print_results("end_plus_one_day", end_plus_one_day)
 
 
 def _print_results(label: str, input_time: datetime):
