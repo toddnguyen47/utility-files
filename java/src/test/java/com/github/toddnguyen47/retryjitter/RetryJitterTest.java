@@ -56,15 +56,14 @@ public class RetryJitterTest {
     public String code = "";
 
     @Override
-    public boolean run() {
+    public void run() throws RetryJitterException {
       if (!code.isEmpty()) {
         char firstChar = code.charAt(0);
         code = code.substring(1);
         if (firstChar == 'F') {
-          return false;
+          throw new RetryJitterException();
         }
       }
-      return true;
     }
   }
 }
