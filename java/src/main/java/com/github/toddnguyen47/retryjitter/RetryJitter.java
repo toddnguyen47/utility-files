@@ -16,8 +16,8 @@ public final class RetryJitter {
   private RetryJitter() {
   }
 
-  public static void retry(
-      final int retryTimes, final int timeoutMilliseconds, final RetryFunction retryFunction)
+  public static<T> T retry(
+      final int retryTimes, final int timeoutMilliseconds, final RetryFunction<T> retryFunction)
       throws RetryJitterException {
     boolean keepRetrying = true;
     int timeoutMillisInner = timeoutMilliseconds;
@@ -28,6 +28,8 @@ public final class RetryJitter {
     int count = 0;
     Instant now = Instant.now();
     RANDOM.setSeed(now.toEpochMilli());
+    T t = null;
+    RetryJitterException lastException = new RetryJitterException("");
 
     for (; count <= retryTimes && keepRetrying; count++) {
       if (count > 0) {
@@ -40,18 +42,20 @@ public final class RetryJitter {
         sleepFor(randomSleepTime);
       }
       try {
-        retryFunction.run();
+        t = retryFunction.run();
         keepRetrying = false;
       } catch (final RetryJitterException e) {
         keepRetrying = true;
+        lastException = e;
       }
     }
 
     // Failure - max retry count reached
     if (keepRetrying) {
       String msg = String.format("retry count '%d' exceeds max retry count of '%d'", count, retryTimes);
-      throw new RetryJitterException(msg);
+      throw new RetryJitterException(msg, lastException);
     }
+    return t;
   }
 
   public static void sleepFor(final long millis) {
@@ -63,12 +67,12 @@ public final class RetryJitter {
   }
 
   @FunctionalInterface
-  public interface RetryFunction {
+  public interface RetryFunction<T> {
     /**
      * <p>Run the function that needs to retry.</p>
      * <p>If the function "passes", do nothing.</p>
      * <p>If the function "fails", throw a RetryJitterException.</p>
      */
-    void run() throws RetryJitterException;
+    T run() throws RetryJitterException;
   }
 }

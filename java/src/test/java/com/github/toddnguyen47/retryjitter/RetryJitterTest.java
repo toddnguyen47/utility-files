@@ -11,12 +11,14 @@ public class RetryJitterTest {
     // -- ARRANGE --
     RetryFunctionTest rft = new RetryFunctionTest();
     // -- ACT --
+    String temp = "";
     // -- ASSERT --
     try {
-      RetryJitter.retry(3, 100, rft);
+      temp = RetryJitter.retry(3, 100, rft);
     } catch (final RetryJitterException e) {
       Assert.fail("no exceptions should have been thrown");
     }
+    Assert.assertEquals("abc123", temp);
   }
 
   @Test
@@ -48,7 +50,7 @@ public class RetryJitterTest {
     }
   }
 
-  private class RetryFunctionTest implements RetryFunction {
+  private class RetryFunctionTest implements RetryFunction<String> {
 
     /*
      * code - "FFFPPP", "F" for fail, "P" for pass
@@ -56,14 +58,15 @@ public class RetryJitterTest {
     public String code = "";
 
     @Override
-    public void run() throws RetryJitterException {
+    public String run() throws RetryJitterException {
       if (!code.isEmpty()) {
         char firstChar = code.charAt(0);
         code = code.substring(1);
         if (firstChar == 'F') {
-          throw new RetryJitterException();
+          throw new RetryJitterException("Failing");
         }
       }
+      return "abc123";
     }
   }
 }
