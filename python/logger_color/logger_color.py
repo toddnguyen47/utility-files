@@ -1,21 +1,26 @@
 """File to allow initialization of a logger that outputs to both files and terminal by default"""
 
-import logging
-from typing import Optional
-import re
-import os
 import enum
+import logging
+import os
+import re
+from typing import Optional
 
 import colorama
 from colorama import Fore, Style
 
-
 colorama.init()
 
+# Reference: https://docs.python.org/3/library/logging.html#logrecord-attributes
 _LOGS_FOLDER = "logs"
 _LOG_FORMAT_STR_STREAM = "[%(asctime)s] [%(levelname)-10s] >>> %(message)s"
-_LOG_FORMAT_STR_FILE = _LOG_FORMAT_STR_STREAM + " [%(filename)s:%(lineno)d] [Logger Name: %(name)s]"
+_LOG_FORMAT_STR_FILE = (
+    _LOG_FORMAT_STR_STREAM + " [%(filename)s:%(lineno)d] [Logger Name: %(name)s]"
+)
 _DATE_FMT_STR = "%Y-%m-%dT%H:%M:%S"
+_LOG_FORMAT_WITH_THREADNAME = (
+    "%(asctime)s | %(threadName)s | [%(levelname)s] %(message)s"
+)
 
 
 class LoggerType(enum.Enum):
@@ -26,7 +31,9 @@ class LoggerType(enum.Enum):
     FILE = 2
 
 
-def init_logger(name: Optional[str] = None, logger_type: Optional[LoggerType] = LoggerType.BOTH) -> logging.Logger:
+def init_logger(
+    name: Optional[str] = None, logger_type: Optional[LoggerType] = LoggerType.BOTH
+) -> logging.Logger:
     """Initialize and return a logger that can be used via `logger.debug(), logger.warn()`, etc.
 
     Args:
@@ -61,7 +68,10 @@ Defaults to both file and terminal handlers.
 
 
 def _add_handlers_according_to_logger_type(
-    name: str, formatter: logging.Formatter, logger: logging.Logger, logger_type: LoggerType
+    name: str,
+    formatter: logging.Formatter,
+    logger: logging.Logger,
+    logger_type: LoggerType,
 ):
     """Add handlers according to logger type. Will default to both file and terminal handlers"""
     # Add handlers accordingly
@@ -92,7 +102,9 @@ def _add_file_handler(name: str, formatter: logging.Formatter, logger: logging.L
 def _add_terminal_handler(logger: logging.Logger):
     """Add terminal handler for logs"""
     console_handler = logging.StreamHandler()
-    console_handler.setFormatter(StreamCustomFormatter(fmt=_LOG_FORMAT_STR_STREAM, datefmt=_DATE_FMT_STR))
+    console_handler.setFormatter(
+        StreamCustomFormatter(fmt=_LOG_FORMAT_STR_STREAM, datefmt=_DATE_FMT_STR)
+    )
     console_handler.setLevel(logging.INFO)
     logger.addHandler(console_handler)
 
@@ -113,11 +125,21 @@ class StreamCustomFormatter(logging.Formatter):
         self._datefmt = datefmt
 
         self._format_styles = {
-            logging.DEBUG: self._stylize_fmt_string_regex(r"%\(levelname\)\S*s", Fore.WHITE),
-            logging.INFO: self._stylize_fmt_string_regex(r"%\(levelname\)\S*s", Fore.GREEN),
-            logging.WARNING: self._stylize_fmt_string_regex(r"%\(levelname\)\S*s", Fore.YELLOW),
-            logging.ERROR: self._stylize_fmt_string_regex(r"%\(levelname\)\S*s", Fore.RED),
-            logging.CRITICAL: self._stylize_fmt_string_regex(r"%\(levelname\)\S+s", Fore.RED + Style.BRIGHT),
+            logging.DEBUG: self._stylize_fmt_string_regex(
+                r"%\(levelname\)\S*s", Fore.WHITE
+            ),
+            logging.INFO: self._stylize_fmt_string_regex(
+                r"%\(levelname\)\S*s", Fore.GREEN
+            ),
+            logging.WARNING: self._stylize_fmt_string_regex(
+                r"%\(levelname\)\S*s", Fore.YELLOW
+            ),
+            logging.ERROR: self._stylize_fmt_string_regex(
+                r"%\(levelname\)\S*s", Fore.RED
+            ),
+            logging.CRITICAL: self._stylize_fmt_string_regex(
+                r"%\(levelname\)\S+s", Fore.RED + Style.BRIGHT
+            ),
         }
 
     def format(self, record) -> logging.LogRecord:
@@ -126,7 +148,9 @@ class StreamCustomFormatter(logging.Formatter):
         return formatter.format(record)
 
     def _stylize_fmt_string(self, str_to_replace: str, color: int) -> str:
-        return self._fmt.replace(str_to_replace, color + str_to_replace + Style.RESET_ALL)
+        return self._fmt.replace(
+            str_to_replace, color + str_to_replace + Style.RESET_ALL
+        )
 
     def _stylize_fmt_string_regex(self, regex_to_color: str, color: int) -> str:
         matched = re.search(regex_to_color, self._fmt)
