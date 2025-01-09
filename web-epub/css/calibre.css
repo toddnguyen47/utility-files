@@ -1,3 +1,10 @@
+/* Ref: https://www.youtube.com/watch?v=WlGQdgy-M6w */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* Lithium Background color: (245, 222, 179) #f5deb3 */
 
 /* ref: https://friendsofepub.github.io/eBookTricks/ */
@@ -17,4 +24,8 @@ a:hover {
 img {
   /* object-fit: contain; */
   display: block;
+}
+
+p {
+  text-indent: 1.3em;
 }
