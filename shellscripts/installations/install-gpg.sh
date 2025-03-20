@@ -3,6 +3,8 @@
 set -eux -o pipefail
 
 # ensure your shell script has LD_LIBRARY_PATH and PKG_CONFIG_PATH, then run `sudo ldconfig`
+# you might need to install `pinentry` with curses
+# might need to run `gpgconf --kill all; gpgconf --launch gpg-agent` as well
 
 # prerequisites
 (
@@ -65,3 +67,7 @@ set -eux -o pipefail
     rm ${mygpg}.tar.bz2
     rm -rf ${mygpg}
 )
+
+# configure gpg
+echo "pinentry-program /usr/bin/pinentry-curses" >> ~/.gnupg/gpg-agent.conf
+gpgconf --reload gpg-agent
