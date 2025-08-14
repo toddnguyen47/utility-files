@@ -1,0 +1,1 @@
+SampleNestedData1(id=id1, number1=10, name=Todd, sampleNestedData2=SampleNestedData2(id=id2, number2=20, hobby=coding, sampleNestedData3=SampleNestedData3(id=id3, number3=30, address=California)))
