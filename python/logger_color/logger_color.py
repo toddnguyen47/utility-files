@@ -13,13 +13,13 @@ colorama.init()
 
 # Reference: https://docs.python.org/3/library/logging.html#logrecord-attributes
 _LOGS_FOLDER = "logs"
-_LOG_FORMAT_STR_STREAM = "[%(asctime)s] [%(levelname)-10s] >>> %(message)s"
+_LOG_FORMAT_STR_STREAM = "[%(asctime)s.%(msecs)03d] [%(levelname)-10s] >>> %(message)s"
 _LOG_FORMAT_STR_FILE = (
     _LOG_FORMAT_STR_STREAM + " [%(filename)s:%(lineno)d] [Logger Name: %(name)s]"
 )
 _DATE_FMT_STR = "%Y-%m-%dT%H:%M:%S"
 _LOG_FORMAT_WITH_THREADNAME = (
-    "%(asctime)s | %(threadName)s | [%(levelname)s] %(message)s"
+    "%(asctime)s.%(msecs)03d | %(threadName)s | [%(levelname)s] %(message)s"
 )
 
 
@@ -32,7 +32,7 @@ class LoggerType(enum.Enum):
 
 
 def init_logger(
-    name: Optional[str] = None, logger_type: Optional[LoggerType] = LoggerType.BOTH
+    name: Optional[str] = None, logger_type: LoggerType = LoggerType.BOTH
 ) -> logging.Logger:
     """Initialize and return a logger that can be used via `logger.debug(), logger.warn()`, etc.
 
@@ -118,10 +118,10 @@ class StreamCustomFormatter(logging.Formatter):
     def __init__(self, fmt: str = "", datefmt: Optional[str] = ""):
         super().__init__(fmt=fmt, datefmt=datefmt)
 
-        self._fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
+        self._fmt = "%(asctime)s.%(msecs)03d - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)"
         if fmt.strip():
             self._fmt = fmt
-        self._fmt = self._stylize_fmt_string("%(asctime)s", Style.DIM)
+        self._fmt = self._stylize_fmt_string("%(asctime)s.%(msecs)03d", Style.DIM)
         self._datefmt = datefmt
 
         self._format_styles = {
@@ -142,20 +142,26 @@ class StreamCustomFormatter(logging.Formatter):
             ),
         }
 
-    def format(self, record) -> logging.LogRecord:
+    def format_log(self, record) -> str:
         log_fmt = self._format_styles.get(record.levelno)
         formatter = logging.Formatter(fmt=log_fmt, datefmt=self._datefmt)
         return formatter.format(record)
 
-    def _stylize_fmt_string(self, str_to_replace: str, color: int) -> str:
-        return self._fmt.replace(
-            str_to_replace, color + str_to_replace + Style.RESET_ALL
+    def _stylize_fmt_string(self, str_to_replace: str, color: str) -> str:
+        fmt_str = str(self._fmt)
+        return fmt_str.replace(
+            str_to_replace, f"{color}{str_to_replace}{Style.RESET_ALL}"
         )
 
-    def _stylize_fmt_string_regex(self, regex_to_color: str, color: int) -> str:
-        matched = re.search(regex_to_color, self._fmt)
-        str_to_color = matched.group(0)
-        return self._fmt.replace(str_to_color, color + str_to_color + Style.RESET_ALL)
+    def _stylize_fmt_string_regex(self, regex_to_color: str, color: str) -> str:
+        fmt_str = str(self._fmt)
+        matched = re.search(regex_to_color, fmt_str)
+        if matched:
+            str_to_color = matched.group(0)
+            return fmt_str.replace(
+                str_to_color, f"{color}{str_to_color}{Style.RESET_ALL}"
+            )
+        return ""
 
 
 def sample_logging(logger: logging.Logger):
