@@ -13,13 +13,13 @@ body * {
   text-align: left;
 }
 
-a {
+/* a {
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-}
+} */
 
 img {
   /* object-fit: contain; */
@@ -27,7 +27,7 @@ img {
 }
 
 p {
-  text-indent: 1.5em;
+  text-indent: 2.0em;
   /* https://stackoverflow.com/a/3170774 */
   margin: 0 auto;
 }
