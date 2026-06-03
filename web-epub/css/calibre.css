@@ -27,7 +27,8 @@ img {
 }
 
 p {
-  text-indent: 2.0em;
+  /* Since 1.5em is the standard for fiction epubs in 2026 and beyond according to Google */
+  text-indent: 1.5em;
   /* https://stackoverflow.com/a/3170774 */
   margin: 0 auto;
 }
