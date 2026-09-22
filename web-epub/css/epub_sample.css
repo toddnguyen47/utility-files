@@ -1,8 +1,12 @@
 /* Ref: https://www.youtube.com/watch?v=WlGQdgy-M6w */
+html {
+  box-sizing: border-box;
+}
+
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
 
 body {
