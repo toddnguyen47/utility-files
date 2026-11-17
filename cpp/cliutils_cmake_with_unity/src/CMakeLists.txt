@@ -8,10 +8,10 @@ cmake_minimum_required(VERSION 3.10)
 # We will use our project name before _SOURCE_DIR
 # Optionally glob, but only for CMake 3.12 or later:
 # file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${ModernCMakeExample_SOURCE_DIR}/include/modern/*.hpp")
-set(HEADER_LIST "${DumbExampleProject_SOURCE_DIR}/include/dumbExample/DumbExample.h")
+set(HEADER_LIST "${DumbExampleProject_SOURCE_DIR}/include/dumb_example/dumb_example.h")
 
 # Make an automatic library - will be static or dynamic based on user setting
-add_library(DumbExampleLib DumbExample.c ${HEADER_LIST})
+add_library(DumbExampleLib dumb_example.c ${HEADER_LIST})
 
 # We need this directory, and users of our library will need it too
 target_include_directories(DumbExampleLib

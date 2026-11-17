@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 # Copied from cliutils' CMake tutorial
 # Tests need to be added as executables first
-add_executable(TestDumbExample TestDumbExample.c)
+add_executable(TestDumbExample test_dumb_example.c)
 
 # Ref: https://cmake.org/cmake/help/latest/command/add_subdirectory.html?highlight=add_subdirectory
 # Add `unity`
